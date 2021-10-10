@@ -60,3 +60,5 @@ async def leecher(bot , m):
             
     print(f"file downloaded to {file_path}")
     await msg.edit(f"Successfully Downloaded to : `{file_path}`")
+
+bot.run()    
