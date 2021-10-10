@@ -1,7 +1,7 @@
 import aiohttp
 import os
 import time
-from telethon import Button, custom, events
+#from telethon import Button, custom, events
 
 
 
