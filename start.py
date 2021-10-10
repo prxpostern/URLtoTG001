@@ -83,5 +83,8 @@ async def leecher(bot , m):
             caption=f"ok",
             reply_to_message_id=m.message_id
         )
+    except Exception as e:
+        print(e)
+        await msg.edit(f"Uploading Failed **Error:** {e}")    
         
 bot.run()
