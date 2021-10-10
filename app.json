@@ -1,7 +1,7 @@
 {
-    "name": "FFMPEG_For_Telegram",
-    "description": "Simple FFmpeg Bot",
-    "repository": "https://github.com/prxpostern/TGFFmpeg001",
+    "name": "Simple Video Uploader",
+    "description": "Simple Video Uploader",
+    "repository": "https://github.com/prxpostern/prxvideoleecher001",
     "success_url": "https://t.me/ali110ali",
     "stack": "container",
     "env": {
