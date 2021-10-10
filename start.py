@@ -165,7 +165,7 @@ async def leecher(bot , m):
         try:
             start = time.time()
             await msg.edit(f"Uploading as File ...")
-            await bot.send_file(
+            await bot.send_document(
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
