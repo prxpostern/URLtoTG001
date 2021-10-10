@@ -174,12 +174,12 @@ async def leecher(bot , m):
                     start
                 ),
                 file_name=filename,
-                audio=file_path,
+                document=file_path,
+                force_document=True,
                 caption=f"`{filename}` [{size}]",
                 reply_to_message_id=m.message_id
             )
         except Exception as e:
-            fsw = "aaa"
             await msg.edit(f"Uploading as File Failed **Error:** {e}")
             os.remove(file_path)
             return
