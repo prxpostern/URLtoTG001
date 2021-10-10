@@ -56,11 +56,7 @@ async def leecher(bot , m):
         url , cfname = m.text.split(" | ", 1)
     else:
         url = m.text
-    
-    mt = mimetypes.guess_type(str(url))[0]
-    if not mt.startswith("video/"):
-        await msg.edit(f"Wrong File Type: `{mt}`")
-        return
+
     try:
         """Downloading Section."""
         
@@ -76,37 +72,51 @@ async def leecher(bot , m):
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
     
+    mt = mimetypes.guess_type(str(file_path))[0]
+    if mt and mt.startswith("video/"):
+        fsw = "vid"
+    elif mt and mt.startswith("audio/"):
+        fsw = "aud"
+    else:
+        fsw = "app"
+    
     if " | " in m.text:
         filename = cfname
-    probe = await stream_creator(file_path)
-    video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
-    width = int(video_stream['width'] if 'width' in video_stream else 0)
-    height = int(video_stream['height'] if 'height' in video_stream else 0)
-    thumbnail = await thumb_creator(file_path)
+
     size_of_file = os.path.getsize(file_path)
     size = get_size(size_of_file)
-    try:
-        start = time.time()
-        await bot.send_video(
-            chat_id=m.chat.id,
-            progress=progress_for_pyrogram,
-            progress_args=(
-                "Uploading Video ...",
-                msg,
-                start
-            ),
-            file_name=filename,
-            video=file_path,
-            width=width,
-            height=height,
-            thumb=str(thumbnail),
-            caption=f"`{filename}` [{size}]",
-            reply_to_message_id=m.message_id
-        )
-    except Exception as e:
-        os.remove(file_path)
-        print(e)
-        await msg.edit(f"Uploading Failed **Error:** {e}")    
+    
+    if fsw == "vid":
+        try:
+            probe = await stream_creator(file_path)
+            video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+            width = int(video_stream['width'] if 'width' in video_stream else 0)
+            height = int(video_stream['height'] if 'height' in video_stream else 0)
+            
+            await msg.edit(f"Generating thumbnail ...")
+            thumbnail = await thumb_creator(file_path)
+            
+            start = time.time()
+            await msg.edit(f"Uploading as Video ...")
+            await bot.send_video(
+                chat_id=m.chat.id,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    "Uploading Video ...",
+                    msg,
+                    start
+                ),
+                file_name=filename,
+                video=file_path,
+                width=width,
+                height=height,
+                thumb=str(thumbnail),
+                caption=f"`{filename}` [{size}]",
+                reply_to_message_id=m.message_id
+            )
+        except Exception as e:
+            os.remove(file_path)
+            await msg.edit(f"Uploading as Video Failed **Error:** {e}")    
     
     await msg.delete()
     os.remove(file_path)
