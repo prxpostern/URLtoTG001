@@ -73,10 +73,17 @@ async def leecher(bot , m):
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
     
     mt = mimetypes.guess_type(str(file_path))[0]
-    if mt and mt.startswith("video/"):
+    if cfname:
+        cfnmt = mimetypes.guess_type(str(cfname))[0]
+    
+    if mt and mt.startswith("video/") and cfnmt.startswith("video/"):
         fsw = "vid"
-    elif mt and mt.startswith("audio/"):
+    elif mt and mt.startswith("video/") and not cfnmt.startswith("video/"):
+        fsw = "app"
+    elif mt and mt.startswith("audio/") and cfnmt.startswith("audio/"):
         fsw = "aud"
+    elif mt and mt.startswith("audio/") and not cfnmt.startswith("audio/"):
+        fsw = "app"    
     else:
         fsw = "app"
     
@@ -131,11 +138,11 @@ async def leecher(bot , m):
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading File ...",
+                    "Uploading as Audio ...",
                     msg,
                     start
                 ),
-                file_name=fname.text,
+                file_name=filename,
                 duration=duration,
                 audio=file_path,
                 caption=f"`{filename}` [{size}]",
@@ -144,7 +151,27 @@ async def leecher(bot , m):
         except Exception as e:
             fsw = "app"
             await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File!")
-        
+    
+    if fsw == "app":
+        try:
+            start = time.time()
+            await msg.edit(f"Uploading as File ...")
+            await bot.send_file(
+                chat_id=m.chat.id,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    "Uploading as File ...",
+                    msg,
+                    start
+                ),
+                file_name=filename,
+                audio=file_path,
+                caption=f"`{filename}` [{size}]",
+                reply_to_message_id=m.message_id
+            )
+        except Exception as e:
+            fsw = "aaa"
+    
     await msg.delete()
     os.remove(file_path)
     
