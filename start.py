@@ -102,7 +102,7 @@ async def leecher(bot , m):
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading Video ...",
+                    "Uploading as Video ...",
                     msg,
                     start
                 ),
@@ -115,9 +115,36 @@ async def leecher(bot , m):
                 reply_to_message_id=m.message_id
             )
         except Exception as e:
-            os.remove(file_path)
-            await msg.edit(f"Uploading as Video Failed **Error:** {e}")    
+            fsw = "app"
+            await msg.edit(f"Uploading as Video Failed **Error:** {e} \n Trying to Upload as File!")    
     
+    if fsw == "aud":
+        try:
+            duration = 0
+            metadata = extractMetadata(createParser(file_path))
+            if metadata and metadata.has("duration"):
+                duration = metadata.get("duration").seconds
+
+            start = time.time()
+            await msg.edit(f"Uploading as Audio ...")
+            await bot.send_audio(
+                chat_id=m.chat.id,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    "Uploading File ...",
+                    msg,
+                    start
+                ),
+                file_name=fname.text,
+                duration=duration,
+                audio=file_path,
+                caption=f"`{filename}` [{size}]",
+                reply_to_message_id=m.message_id
+            )
+        except Exception as e:
+            fsw = "app"
+            await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File!")
+        
     await msg.delete()
     os.remove(file_path)
     
