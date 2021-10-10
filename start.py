@@ -80,23 +80,23 @@ async def leecher(bot , m):
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
     
     mt = mimetypes.guess_type(str(file_path))[0]
-    if cfname:
-        cfnmt = mimetypes.guess_type(str(cfname))[0]
     
-    if mt and mt.startswith("video/") and cfnmt.startswith("video/"):
+    if mt and mt.startswith("video/"):
         fsw = "vid"
-    elif mt and mt.startswith("video/") and not cfnmt.startswith("video/"):
-        fsw = "app"
-    elif mt and mt.startswith("audio/") and cfnmt.startswith("audio/"):
+    elif mt and mt.startswith("audio/"):
         fsw = "aud"
-    elif mt and mt.startswith("audio/") and not cfnmt.startswith("audio/"):
-        fsw = "app"    
     else:
         fsw = "app"
     
     if " | " in m.text:
         filename = cfname
-
+        cfnmt = mimetypes.guess_type(str(cfname))[0]
+        if cfnmt and cfnmt.startswith("video/"):
+            fsw = "vid"
+        elif cfname and cfnmt.startswith("audio/"):
+            fsw = "aud"
+        else:
+            fsw = "app"
     size_of_file = os.path.getsize(file_path)
     size = get_size(size_of_file)
     
