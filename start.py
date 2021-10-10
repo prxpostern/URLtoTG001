@@ -76,7 +76,7 @@ async def leecher(bot , m):
             progress=progress_for_pyrogram,
             progress_args=(
                 "Uploading File ...",
-                mesg,
+                msg,
                 start
             ),
             file_name="test.mkv",
