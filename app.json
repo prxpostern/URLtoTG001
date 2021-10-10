@@ -1,0 +1,32 @@
+{
+    "name": "FFMPEG_For_Telegram",
+    "description": "Simple FFmpeg Bot",
+    "repository": "https://github.com/prxpostern/TGFFmpeg001",
+    "success_url": "https://t.me/ali110ali",
+    "stack": "container",
+    "env": {
+        "BOT_TOKEN": {
+
+        "description": "Your bot token, as a string.",
+
+        "value": ""
+
+        },
+
+        "API_ID": {
+
+        "description": "Get this value from https://my.telegram.org",
+
+        "value": ""
+
+        },
+
+        "API_HASH": {
+
+        "description": "Get this value from https://my.telegram.org",
+
+        "value": ""
+
+        }
+    }
+}
