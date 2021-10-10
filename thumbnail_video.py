@@ -10,14 +10,14 @@ LOGGER = logging.getLogger(__name__)
 
 from os import path as os_path, rename as os_rename, remove as os_remove
 import asyncio
-from plugins import ffprobe
+from ffprobe import stream_creator
 
 async def thumb_creator(filepath):
     if not os_path.exists(filepath):
         LOGGER.error('File not found : ' + filepath)
         return False
 
-    probe = await ffprobe.func(filepath)
+    probe = await stream_creator(filepath)
     video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
 
     try:
