@@ -1,6 +1,13 @@
-from telethon import TelegramClient, events, Button
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyromod import listen
+from urllib.parse import quote_plus
+import math
 from download_from_url import download_file, get_size
 from file_handler import send_to_transfersh_async, progress
+from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
+from display_progress import progress_for_pyrogram, humanbytes
 import os
 import time
 import datetime
@@ -8,13 +15,18 @@ import aiohttp
 import asyncio
 from tools import execute
 
-api_id = int(os.environ.get("API_ID"))
-api_hash = os.environ.get("API_HASH")
-bot_token =os.environ.get("BOT_TOKEN")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+API_ID = os.environ.get("API_ID")
+API_HASH = os.environ.get("API_HASH")
+
+bot = Client(
+    "Bot",
+    bot_token = BOT_TOKEN,
+    api_id = API_ID,
+    api_hash = API_HASH
+)
                           
 download_path = "Downloads/"
-
-bot = TelegramClient('Encoder bot', api_id, api_hash).start(bot_token=bot_token)
 
 HELP_TXT = """
 I am a FFmpeg robot. I can convert All Type of Media.
