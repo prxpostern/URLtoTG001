@@ -6,3 +6,6 @@ pyaesni
 requests
 asyncio
 hachoir
+pyromod
+Pillow
+ffmpeg
