@@ -54,7 +54,6 @@ async def leecher(bot , m):
     else:
         url = m.text
     try:
-        try:
         """Downloading Section."""
         
         if not os.path.isdir(download_path):
