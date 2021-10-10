@@ -53,12 +53,20 @@ async def leecher(bot , m):
         url , cfname = m.text.split(" | ", 1)
     else:
         url = m.text
-    
-    start = time.time()
-    filename = os.path.join(download_path, os.path.basename(url))
-    file_path = await download_file(url, filename, msg, start, bot)
-            
-    print(f"file downloaded to {file_path}")
-    await msg.edit(f"Successfully Downloaded to : `{file_path}`")
+    try:
+        try:
+        """Downloading Section."""
+        
+        if not os.path.isdir(download_path):
+            os.mkdir(download_path)
+        
+        start = time.time()
+        filename = os.path.join(download_path, os.path.basename(url))
+        file_path = await download_file(url, filename, msg, start, bot)
+        print(f"file downloaded to {file_path}")
+        await msg.edit(f"Successfully Downloaded to : `{file_path}`")
+    except Exception as e:
+        print(e)
+        await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
 
-bot.run()    
+bot.run()
