@@ -32,13 +32,23 @@ bot = Client(
 download_path = "Downloads/"
 
 HELP_TXT = """
+    See Below
+
     URL | Custom_File_Name.Extension
+    
+    Example:
+    
+    http://aaa.bbb.ccc/ddd.eee | fff.ggg
+    
+    or
+    
+    Just send your Link !
 """
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot , m):
     """Send a message when the command /start is issued."""
-    await m.reply_text(text=f"Send Video Link")
+    await m.reply_text(text=f"Send Video Link ... \n URL | NewName.ext")
 
     
 @bot.on_message(filters.command(["help"]))
@@ -48,18 +58,15 @@ async def help(bot , m):
 
 @bot.on_message(filters.private & filters.text)
 async def leecher(bot , m):
-    
-    """Echo the user message."""
-    msg = await m.reply_text(text=f"Downloading Video Link ...")
-    
+
     if " | " in m.text:
         url , cfname = m.text.split(" | ", 1)
     else:
         url = m.text
-
-    try:
-        """Downloading Section."""
-        
+    
+    msg = await m.reply_text(text=f"Analyzing Your Link ...")
+    
+    try:        
         if not os.path.isdir(download_path):
             os.mkdir(download_path)
         
@@ -67,7 +74,7 @@ async def leecher(bot , m):
         filename = os.path.join(download_path, os.path.basename(url))
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
-        await msg.edit(f"Successfully Downloaded to : `{file_path}`")
+        await msg.edit(f"Successfully Downloaded .")
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
@@ -109,7 +116,7 @@ async def leecher(bot , m):
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as Video ...",
+                    "Uploading as Video Started ...",
                     msg,
                     start
                 ),
@@ -123,7 +130,8 @@ async def leecher(bot , m):
             )
         except Exception as e:
             fsw = "app"
-            await msg.edit(f"Uploading as Video Failed **Error:** {e} \n Trying to Upload as File!")    
+            await msg.edit(f"Uploading as Video Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
+            await asyncio.sleep(3)
     
     if fsw == "aud":
         try:
@@ -138,7 +146,7 @@ async def leecher(bot , m):
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as Audio ...",
+                    "Uploading as Audio Started ...",
                     msg,
                     start
                 ),
@@ -150,7 +158,8 @@ async def leecher(bot , m):
             )
         except Exception as e:
             fsw = "app"
-            await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File!")
+            await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
+            await asyncio.sleep(3)
     
     if fsw == "app":
         try:
@@ -160,7 +169,7 @@ async def leecher(bot , m):
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as File ...",
+                    "Uploading as File Started ...",
                     msg,
                     start
                 ),
@@ -171,6 +180,9 @@ async def leecher(bot , m):
             )
         except Exception as e:
             fsw = "aaa"
+            await msg.edit(f"Uploading as File Failed **Error:** {e}")
+            os.remove(file_path)
+            return
     
     await msg.delete()
     os.remove(file_path)
