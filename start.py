@@ -78,13 +78,15 @@ async def leecher(bot , m):
     width = int(video_stream['width'] if 'width' in video_stream else 0)
     height = int(video_stream['height'] if 'height' in video_stream else 0)
     thumbnail = await thumb_creator(file_path)
+    size_of_file = os.path.getsize(file_path)
+    size = get_size(size_of_file)
     try:
         start = time.time()
         await bot.send_video(
             chat_id=m.chat.id,
             progress=progress_for_pyrogram,
             progress_args=(
-                "Uploading File ...",
+                "Uploading Video ...",
                 msg,
                 start
             ),
@@ -93,11 +95,15 @@ async def leecher(bot , m):
             width=width,
             height=height,
             thumb=str(thumbnail),
-            caption=f"ok",
+            caption=f"`{filename}` [{size}]",
             reply_to_message_id=m.message_id
         )
     except Exception as e:
+        os.remove(file_path)
         print(e)
         await msg.edit(f"Uploading Failed **Error:** {e}")    
-        
+    
+    await msg.delete()
+    os.remove(file_path)
+    
 bot.run()
