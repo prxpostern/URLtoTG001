@@ -13,6 +13,7 @@ import time
 import datetime
 import aiohttp
 import asyncio
+import mimetypes
 from tools import execute
 from ffprobe import stream_creator
 from thumbnail_video import thumb_creator
@@ -56,6 +57,10 @@ async def leecher(bot , m):
     else:
         url = m.text
     
+    mt = mimetypes.guess_type(str(url))[0]
+    if not mt.startswith("video/"):
+        await msg.edit(f"Wrong File Type: `{mt}`")
+        return
     try:
         """Downloading Section."""
         
