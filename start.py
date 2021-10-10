@@ -14,6 +14,8 @@ import datetime
 import aiohttp
 import asyncio
 from tools import execute
+from ffprobe import stream_creator
+from thumbnail_video import thumb_creator
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 API_ID = os.environ.get("API_ID")
@@ -69,6 +71,13 @@ async def leecher(bot , m):
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
     
+    if " | " in m.text:
+        filename = cfname
+    probe = await stream_creator(file_path)
+    video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+    width = int(video_stream['width'] if 'width' in video_stream else 0)
+    height = int(video_stream['height'] if 'height' in video_stream else 0)
+    thumbnail = await thumb_creator(file_path)
     try:
         start = time.time()
         await bot.send_video(
@@ -79,8 +88,11 @@ async def leecher(bot , m):
                 msg,
                 start
             ),
-            file_name="test.mp4",
+            file_name=filename,
             video=file_path,
+            width=width,
+            height=height,
+            thumb=str(thumbnail),
             caption=f"ok",
             reply_to_message_id=m.message_id
         )
