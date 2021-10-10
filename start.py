@@ -45,8 +45,10 @@ async def help(bot , m):
 
 @bot.on_message(filters.private & filters.text)
 async def leecher(bot , m):
+    
     """Echo the user message."""
-
+    msg = await m.reply_text(text=f"Downloading Video Link ...")
+    
     if " | " in m.text:
         url , cfname = m.text.split(" | ", 1)
     else:
@@ -57,11 +59,7 @@ async def leecher(bot , m):
     file_path = await download_file(url, filename, msg, start, bot)
             
     print(f"file downloaded to {file_path}")
-        
-        """ User Input Section """
-        await msg2.edit(f"Successfully Downloaded to : `{file_path}`")
-        msg3 = await update2.reply("**Step2:** Enter The Extension : \n Examples: \n `_.mkv` \n `_320p.mp4` \n `new.mp3` \n `32k.aac` \n `_.mka` \n\n To Cancel press /cancel")
-        
+    await msg.edit(f"Successfully Downloaded to : `{file_path}`")
 
 def main():
     """Start the bot."""
