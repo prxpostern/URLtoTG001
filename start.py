@@ -60,11 +60,3 @@ async def leecher(bot , m):
             
     print(f"file downloaded to {file_path}")
     await msg.edit(f"Successfully Downloaded to : `{file_path}`")
-
-def main():
-    """Start the bot."""
-    print("\nBot started ...\n")
-    bot.run_until_disconnected()
-
-if __name__ == '__main__':
-    main()
