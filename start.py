@@ -53,6 +53,7 @@ async def leecher(bot , m):
         url , cfname = m.text.split(" | ", 1)
     else:
         url = m.text
+    
     try:
         """Downloading Section."""
         
@@ -67,5 +68,20 @@ async def leecher(bot , m):
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
-
+    
+    try:
+        await bot.send_video(
+            chat_id=m.chat.id,
+            progress=progress_for_pyrogram,
+            progress_args=(
+                "Uploading File ...",
+                mes2,
+                c_time
+            ),
+            file_name="test.mkv",
+            video=file_path,
+            caption=f"ok",
+            reply_to_message_id=m.message_id
+        )
+        
 bot.run()
