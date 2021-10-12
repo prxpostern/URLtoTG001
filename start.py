@@ -78,7 +78,7 @@ async def to_video(bot , u):
                 c_time = time.time()
                 file_path = await bot.download_media(
                     m,
-                    file_name='aaa.mkv',
+                    file_name="aaa.mkv",
                     progress=progress_for_pyrogram,
                     progress_args=(
                         "Downloading File ...",
@@ -92,10 +92,10 @@ async def to_video(bot , u):
                 if rcode != 0:
                     await mes2.edit(f"**FFmpeg: Error Occured.**`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
                     os.remove(file_path)
-                    print(err)
+                    os.remove("Downloads/aaa.mkv")
                     return
                 
-                await mes2.edit(f"Generating thumbnail ...")
+                await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
                 file_path2 = "Downloads/bbb.mp4"
                 probe = await stream_creator(file_path2)
                 video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
@@ -122,6 +122,8 @@ async def to_video(bot , u):
                     caption=f"`{fnext}` [{fsize}]",
                     reply_to_message_id=m.message_id
                 )
+                os.remove("Downloads/aaa.mkv")
+                os.remove(file_path2)
             except Exception as e:
                 await msg.edit(f"Uploading as Video Failed **Error:** {e}")
         
