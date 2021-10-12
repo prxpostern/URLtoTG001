@@ -60,7 +60,7 @@ async def help(bot , m):
 async def to_video(bot , u):
     m = u.reply_to_message
     if m.audio or m.photo or m.voice or m.location or m.contact:
-        msg = await m.reply_text(text=f"Wrong File Type ...")
+        await m.reply_text(text=f"Wrong File Type ...")
         return
     else:  
         ft = m.document or m.video
@@ -78,7 +78,7 @@ async def to_video(bot , u):
                 c_time = time.time()
                 file_path = await bot.download_media(
                     m,
-                    file_name="aaa.mkv",
+                    file_name="/Downloads/aaa.mkv",
                     progress=progress_for_pyrogram,
                     progress_args=(
                         "Downloading File ...",
@@ -89,13 +89,13 @@ async def to_video(bot , u):
                 await mes2.edit(f"Fixing Problems ... `{file_path}`")
                 await asyncio.sleep(5)
                 
-                out, err, rcode, pid = await execute(f"ffmpeg -i /bot/downloads/aaa.mkv -c copy /bot/downloads/bbb.mp4 -y")
+                out, err, rcode, pid = await execute(f"ffmpeg -i /Downloads/aaa.mkv -c copy /Downloads/bbb.mp4 -y")
                 if rcode != 0:
                     await mes2.edit(f"**FFmpeg: Error Occured.**`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
-                    os.remove("/bot/downloads/aaa.mkv")
+                    os.remove("/Downloads/aaa.mkv")
                     return
                 
-                file_path2 = "/bot/downloads/bbb.mp4"
+                file_path2 = "/Downloads/bbb.mp4"
                 size_of_file = os.path.getsize(file_path2)
                 size = get_size(size_of_file)
                 await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`\n\n[{size}]")
@@ -109,6 +109,7 @@ async def to_video(bot , u):
                 
                 c_time = time.time()
                 await mes2.edit(f"Uploading as Video ... {fnext}\n{size}")
+                await asyncio.sleep(5)
                 await bot.send_video(
                     chat_id=m.chat.id,
                     progress=progress_for_pyrogram,
@@ -125,7 +126,7 @@ async def to_video(bot , u):
                     caption=f"`{fnext}` [{size}]",
                     reply_to_message_id=m.message_id
                 )
-                os.remove("/bot/downloads/aaa.mkv")
+                os.remove("/Downloads/aaa.mkv")
                 os.remove(file_path2)
             except Exception as e:
                 await mes2.edit(f"Uploading as Video Failed **Error:** {e}")
