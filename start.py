@@ -98,7 +98,8 @@ async def to_video(bot , u):
                 file_path2 = "/Downloads/bbb.mp4"
                 size_of_file = os.path.getsize(file_path2)
                 size = get_size(size_of_file)
-                await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`\n\n[{size}]")
+                #await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`\n\n[{size}]")
+                await mes2.edit(f"Generating thumbnail ...")
                 await asyncio.sleep(5)
                 probe = await stream_creator(file_path2)
                 video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
@@ -129,7 +130,7 @@ async def to_video(bot , u):
                 os.remove("/Downloads/aaa.mkv")
                 os.remove(file_path2)
             except Exception as e:
-                await mes2.edit(f"Uploading as Video Failed **Error:** {e}")
+                await mes2.edit(f"Uploading as Video Failed **Error:**\n\n{e}")
         
 
 @bot.on_message(filters.private & filters.text)
