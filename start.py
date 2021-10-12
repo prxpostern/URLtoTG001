@@ -86,7 +86,8 @@ async def to_video(bot , u):
                         c_time
                     )
                 )
-                await mes2.edit(f"Fixing Problems ...")
+                await mes2.edit(f"Fixing Problems ... `{file_path}`")
+                await asyncio.sleep(5)
                 
                 out, err, rcode, pid = await execute(f"ffmpeg -i Downloads/aaa.mkv -c copy Downloads/bbb.mp4 -y")
                 if rcode != 0:
