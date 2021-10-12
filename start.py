@@ -78,7 +78,7 @@ async def to_video(bot , u):
                 c_time = time.time()
                 file_path = await bot.download_media(
                     m,
-                    file_name="Downloads/aaa.mkv",
+                    file_name="aaa.mkv",
                     progress=progress_for_pyrogram,
                     progress_args=(
                         "Downloading File ...",
@@ -89,15 +89,14 @@ async def to_video(bot , u):
                 await mes2.edit(f"Fixing Problems ... `{file_path}`")
                 await asyncio.sleep(5)
                 
-                out, err, rcode, pid = await execute(f"ffmpeg -i Downloads/aaa.mkv -c copy Downloads/bbb.mp4 -y")
+                out, err, rcode, pid = await execute(f"ffmpeg -i /bot/downloads/aaa.mkv -c copy /bot/downloads/bbb.mp4 -y")
                 if rcode != 0:
                     await mes2.edit(f"**FFmpeg: Error Occured.**`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
-                    os.remove(file_path)
-                    os.remove("Downloads/aaa.mkv")
+                    os.remove("/bot/downloads/aaa.mkv")
                     return
                 
                 await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
-                file_path2 = "Downloads/bbb.mp4"
+                file_path2 = "/bot/downloads/bbb.mp4"
                 probe = await stream_creator(file_path2)
                 video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
                 width = int(video_stream['width'] if 'width' in video_stream else 0)
@@ -123,7 +122,7 @@ async def to_video(bot , u):
                     caption=f"`{fnext}` [{fsize}]",
                     reply_to_message_id=m.message_id
                 )
-                os.remove("Downloads/aaa.mkv")
+                os.remove("/bot/downloads/aaa.mkv")
                 os.remove(file_path2)
             except Exception as e:
                 await msg.edit(f"Uploading as Video Failed **Error:** {e}")
