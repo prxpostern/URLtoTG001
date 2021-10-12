@@ -48,7 +48,7 @@ HELP_TXT = """
 @bot.on_message(filters.command(["start"]))
 async def start(bot , m):
     """Send a message when the command /start is issued."""
-    await m.reply_text(text=f"Send Video Link ... \n URL | NewName.ext")
+    await m.reply_text(text=f"Send Video Link ... \n\nURL | NewName.ext")
 
     
 @bot.on_message(filters.command(["help"]))
