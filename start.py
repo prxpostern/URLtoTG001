@@ -56,6 +56,76 @@ async def help(bot , m):
     """Send a message when the command /help is issued."""
     await m.reply_text(text=f"{HELP_TXT}")   
 
+@bot.on_message(filters.command(["c2v"]))
+async def to_video(bot , u):
+    m = u.reply_to_message
+    if m.audio or m.photo or m.voice or m.location or m.contact:
+        msg = await m.reply_text(text=f"Wrong File Type ...")
+        return
+    else:  
+        ft = m.document or m.video
+        fullname = ft.file_name
+        fsize = get_size(ft.file_size)
+        fn = os.path.splitext(fullname)[0]
+        if ft.mime_type.startswith("video/"):
+            try:
+                if not os.path.isdir(download_path):
+                    os.mkdir(download_path)
+                mes2 = await m.reply_text(
+                    text=f"**Downloading...**",
+                    quote=True
+                )
+                c_time = time.time()
+                file_path = await bot.download_media(
+                    m,
+                    file_name='aaa.mkv',
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        "Downloading File ...",
+                        mes2,
+                        c_time
+                    )
+                )
+                await mes2.edit(f"Fixing Problems ...")
+                
+                out, err, rcode, pid = await execute(f"ffmpeg -i Downloads/aaa.mkv -c copy Downloads/bbb.mp4 -y")
+                if rcode != 0:
+                    await mes2.edit(f"**FFmpeg: Error Occured.**`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
+                    os.remove(file_path)
+                    print(err)
+                    return
+                
+                await mes2.edit(f"Generating thumbnail ...")
+                file_path2 = "Downloads/bbb.mp4"
+                probe = await stream_creator(file_path2)
+                video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+                width = int(video_stream['width'] if 'width' in video_stream else 0)
+                height = int(video_stream['height'] if 'height' in video_stream else 0)
+                thumbnail = await thumb_creator(file_path2)
+                fnext = fn + ".mp4"
+
+                c_time = time.time()
+                await mes2.edit(f"Uploading as Video ...")
+                await bot.send_video(
+                    chat_id=m.chat.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        "Uploading as Video Started ...",
+                        mes2,
+                        c_time
+                    ),
+                    file_name=fnext,
+                    video=file_path2,
+                    width=width,
+                    height=height,
+                    thumb=str(thumbnail),
+                    caption=f"`{fnext}` [{fsize}]",
+                    reply_to_message_id=m.message_id
+                )
+            except Exception as e:
+                await msg.edit(f"Uploading as Video Failed **Error:** {e}")
+        
+
 @bot.on_message(filters.private & filters.text)
 async def leecher(bot , m):
 
