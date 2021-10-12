@@ -108,7 +108,7 @@ async def to_video(bot , u):
                 fnext = fn + ".mp4"
                 
                 c_time = time.time()
-                await mes2.edit(f"Uploading as Video ...")
+                await mes2.edit(f"Uploading as Video ... {fnext}\n{size}")
                 await bot.send_video(
                     chat_id=m.chat.id,
                     progress=progress_for_pyrogram,
@@ -122,7 +122,7 @@ async def to_video(bot , u):
                     width=width,
                     height=height,
                     thumb=str(thumbnail),
-                    caption=f"`{fnext}` [{fsize}]",
+                    caption=f"`{fnext}` [{size}]",
                     reply_to_message_id=m.message_id
                 )
                 os.remove("/bot/downloads/aaa.mkv")
