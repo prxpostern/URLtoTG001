@@ -33,13 +33,13 @@ download_path = "Downloads/"
 
 HELP_TXT = """
     Please Send Your link like bellow:
-    **URL** | **Custom_File_Name.Extension**
+  **URL** | **Custom_File_Name.Extension**
     
     Example:
-    http://aaa.bbb.ccc/ddd.eee | fff.ggg
+   `http://aaa.bbb.ccc/ddd.eee` | **fff.ggg**
     
     if you want to convert a media 
-    that uploaded as document to video with thumb,
+    that uploaded as document, to video with thumb,
     forward your media to bot and then send /c2v
     as reply to that.
 """
