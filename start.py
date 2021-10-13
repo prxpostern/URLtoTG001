@@ -131,6 +131,9 @@ async def to_video(bot , u):
                 os.remove(file_path2)
             except Exception as e:
                 await mes2.edit(f"Uploading as Video Failed **Error:**\n\n{e}")
+        else:
+            await m.reply_text(text=f"Wrong File Type ...")
+            return
 
 @bot.on_message(filters.private & filters.text)
 async def leecher(bot , m):
