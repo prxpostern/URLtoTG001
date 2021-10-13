@@ -11,3 +11,9 @@ Telegram RoBot to Upload Links.
 
 #### LICENSE
 - GPLv3
+
+## 🚀 Deployment
+
+### 💜 Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/prxpostern/URLtoTG001)
