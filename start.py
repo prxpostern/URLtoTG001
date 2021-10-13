@@ -32,23 +32,22 @@ bot = Client(
 download_path = "Downloads/"
 
 HELP_TXT = """
-    See Below
-
-    URL | Custom_File_Name.Extension
+    Please Send Your link like bellow:
+    **URL** | **Custom_File_Name.Extension**
     
     Example:
-    
     http://aaa.bbb.ccc/ddd.eee | fff.ggg
     
-    or
-    
-    Just send your Link !
+    if you want to convert a media 
+    that uploaded as document to video with thumb,
+    forward your media to bot and then send /c2v
+    as reply to that.
 """
 
 @bot.on_message(filters.command(["start"]))
 async def start(bot , m):
     """Send a message when the command /start is issued."""
-    await m.reply_text(text=f"Send Video Link ... \n\nURL | NewName.ext")
+    await m.reply_text(text=f"Hi . I Can Upload Your Direct Link to Telegram.\nI also can convert document media to video with thumb.\nSee /help for more info!")
 
     
 @bot.on_message(filters.command(["help"]))
