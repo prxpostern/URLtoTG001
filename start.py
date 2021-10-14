@@ -106,7 +106,7 @@ async def to_video(bot , u):
                 height = int(video_stream['height'] if 'height' in video_stream else 0)
                 thumbnail = await thumb_creator(file_path2)
                 fnext = fn + ".mp4"
-                
+                duration = int(float(probe["format"]["duration"]))                
                 c_time = time.time()
                 await mes2.edit(f"Trying to Upload as Video ...")
                 #await asyncio.sleep(5)
@@ -122,6 +122,7 @@ async def to_video(bot , u):
                     video=file_path2,
                     width=width,
                     height=height,
+                    duration=duration,
                     thumb=str(thumbnail),
                     caption=f"`{fnext}` [{size}]",
                     reply_to_message_id=m.message_id
