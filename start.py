@@ -77,7 +77,6 @@ async def to_video(bot , u):
                 c_time = time.time()
                 file_path = await bot.download_media(
                     m,
-                    download_path,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         "Downloading Status ...",
