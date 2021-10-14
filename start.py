@@ -66,7 +66,7 @@ async def to_video(bot , u):
         if ft.file_name:
             fullname = ft.file_name
         else:
-            fullname = m.date + ".mp4"
+            fullname = str(m.date) + ".mp4"
         fsize = get_size(ft.file_size)
         fn = os.path.splitext(fullname)[0]
         if ft.mime_type.startswith("video/"):
