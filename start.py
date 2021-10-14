@@ -154,6 +154,7 @@ async def leecher(bot , m):
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
         await msg.edit(f"Successfully Downloaded .")
+        filename = os.path.basename(file_path)
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
