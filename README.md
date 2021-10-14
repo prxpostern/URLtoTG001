@@ -1,7 +1,7 @@
 ## URLtoTG001 (Bot)
 ---
 
-Telegram RoBot to Upload Links.
+A Simple Telegram Bot to Upload Files From Direct Links.
 
 **Features**:
 
