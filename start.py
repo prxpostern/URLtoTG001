@@ -185,7 +185,7 @@ async def leecher(bot , m):
             video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
             width = int(video_stream['width'] if 'width' in video_stream else 0)
             height = int(video_stream['height'] if 'height' in video_stream else 0)
-            
+            duration = int(float(probe["format"]["duration"]))
             await msg.edit(f"Generating thumbnail ...")
             thumbnail = await thumb_creator(file_path)
             
@@ -203,6 +203,7 @@ async def leecher(bot , m):
                 video=file_path,
                 width=width,
                 height=height,
+                duration=duration,
                 thumb=str(thumbnail),
                 caption=f"`{filename}` [{size}]",
                 reply_to_message_id=m.message_id
