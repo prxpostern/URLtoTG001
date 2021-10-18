@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod import listen
-from urllib.parse import quote_plus
+from urllib.parse import quote_plus, unquote
 import math
 from download_from_url import download_file, get_size
 from file_handler import send_to_transfersh_async, progress
@@ -157,7 +157,7 @@ async def leecher(bot , m):
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
         await msg.edit(f"Successfully Downloaded .")
-        filename = os.path.basename(file_path)
+        filename = unquote(os.path.basename(file_path))
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
@@ -172,7 +172,7 @@ async def leecher(bot , m):
         fsw = "app"
     
     if " | " in m.text:
-        filename = cfname
+        filename = unquote(cfname)
         cfnmt = mimetypes.guess_type(str(cfname))[0]
         if cfnmt and cfnmt.startswith("video/"):
             fsw = "vid"
