@@ -57,6 +57,9 @@ async def help(bot , m):
 
 @bot.on_message(filters.command(["c2v"]))
 async def to_video(bot , u):
+    if not u.reply_to_message:
+        await u.reply_text(text=f"Reply To Your Media !")
+        return
     m = u.reply_to_message
     if m.audio or m.photo or m.voice or m.location or m.contact:
         await m.reply_text(text=f"Wrong File Type ...")
@@ -140,6 +143,9 @@ async def to_video(bot , u):
 
 @bot.on_message(filters.private & filters.command(["upload"]))
 async def leecher(bot , u):
+    if not u.reply_to_message:
+        await u.reply_text(text=f"Reply To Your Direct Link !")
+        return
     
     m = u.reply_to_message
     
