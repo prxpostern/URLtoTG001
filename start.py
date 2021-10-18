@@ -147,6 +147,7 @@ async def leecher(bot , u):
         url , cfname = m.text.split("|", 1)
         url = url.strip()
         cfname = cfname.strip()
+        cfname = cfname.replace('%40','@')
     else:
         url = m.text
     
@@ -161,7 +162,8 @@ async def leecher(bot , u):
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
         await msg.edit(f"Successfully Downloaded .")
-        filename = unquote(os.path.basename(file_path)).decode('utf8')
+        filename = os.path.basename(file_path)
+        filename = filename.replace('%40','@')
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
@@ -175,8 +177,8 @@ async def leecher(bot , u):
     else:
         fsw = "app"
     
-    if " | " in m.text:
-        filename = unquote(cfname).decode('utf8')
+    if "|" in m.text:
+        filename = cfname
         cfnmt = mimetypes.guess_type(str(cfname))[0]
         if cfnmt and cfnmt.startswith("video/"):
             fsw = "vid"
