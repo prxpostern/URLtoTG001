@@ -155,7 +155,12 @@ async def leecher(bot , u):
         cfname = cfname.strip()
         cfname = cfname.replace('%40','@')
     else:
-        url = m.text
+        url = m.text.strip()
+        if os.path.splitext(url)[1]:
+            ofn = os.path.basename(url)
+        else:
+            await m.reply_text(text=f"I Could nott Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help")
+            return
     
     msg = await m.reply_text(text=f"Analyzing Your Link ...")
     
@@ -167,6 +172,7 @@ async def leecher(bot , u):
         filename = os.path.join(download_path, os.path.basename(url))
         filename = filename.replace('%25','_')
         filename = filename.replace(' ','_')
+        filename = filename.replace('%40','@')
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
         await msg.edit(f"Successfully Downloaded .")
