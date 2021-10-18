@@ -37,11 +37,11 @@ HELP_TXT = """
     
     Example:
    `http://aaa.bbb.ccc/ddd.eee` | **fff.ggg**
+    or
+    `http://aaa.bbb.ccc/ddd.eee`
     
-    if you want to convert a media 
-    that uploaded as document, to video with thumb,
-    forward your media to bot and then send /c2v
-    as reply to that.
+    /upload : reply to your url to start uploading from direct link.
+    /c2v : reply to your document To Convert It Into Streamable video File.
 """
 
 @bot.on_message(filters.command(["start"]))
@@ -138,11 +138,15 @@ async def to_video(bot , u):
             await m.reply_text(text=f"Wrong File Type ...")
             return
 
-@bot.on_message(filters.private & filters.text)
-async def leecher(bot , m):
-
-    if " | " in m.text:
-        url , cfname = m.text.split(" | ", 1)
+@bot.on_message(filters.private & filters.command(["upload"]))
+async def leecher(bot , u):
+    
+    m = u.reply_to_message
+    
+    if "|" in m.text:
+        url , cfname = m.text.split("|", 1)
+        url = url.strip()
+        cfname = cfname.strip()
     else:
         url = m.text
     
@@ -157,7 +161,7 @@ async def leecher(bot , m):
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
         await msg.edit(f"Successfully Downloaded .")
-        filename = unquote(os.path.basename(file_path))
+        filename = unquote(os.path.basename(file_path)).decode('utf8')
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
@@ -172,7 +176,7 @@ async def leecher(bot , m):
         fsw = "app"
     
     if " | " in m.text:
-        filename = unquote(cfname)
+        filename = unquote(cfname).decode('utf8')
         cfnmt = mimetypes.guess_type(str(cfname))[0]
         if cfnmt and cfnmt.startswith("video/"):
             fsw = "vid"
