@@ -176,75 +176,68 @@ async def to_video(bot , u):
         ft = m.document or m.video
         if ft.file_name:
             fullname = ft.file_name
+            fullname = fullname.replace('%40','@')
+            fullname = fullname.replace('%25','_')
+            fullname = fullname.replace(' ','_')
         else:
-            fullname = str(m.date) + ".mp4"
+            fullname = "Video_CHATID" + str(m.chat.id) + "_DATE" + str(m.date) + ".mp4"
         fsize = get_size(ft.file_size)
         fn = os.path.splitext(fullname)[0]
         if ft.mime_type.startswith("video/"):
+            mes2 = await m.reply_text(
+                text=f"**Processing...**",
+                quote=True
+            )
+            c_time = time.time()
+            file_path = await bot.download_media(
+                m,
+                file_name=fullname,
+                progress=progress_for_pyrogram,
+                progress_args=(
+                    "Downloading Status ...",
+                    mes2,
+                    c_time
+                )
+            )
+            await mes2.edit(f"🌄 Generating thumbnail ...")
+            probe = await stream_creator(file_path)
+            duration = int(float(probe["format"]["duration"])) 
+            video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+            width = int(video_stream['width'] if 'width' in video_stream else 0)
+            height = int(video_stream['height'] if 'height' in video_stream else 0)
+            thumbnail = await thumb_creator(file_path)
+            fnext = fn + ".mp4"
+            await mes2.edit(f"⬆️ Trying to Upload as Video ...")
             try:
-                if not os.path.isdir(download_path):
-                    os.mkdir(download_path)
-                mes2 = await m.reply_text(
-                    text=f"**Processing...**",
-                    quote=True
-                )
                 c_time = time.time()
-                file_path = await bot.download_media(
-                    m,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        "Downloading Status ...",
-                        mes2,
-                        c_time
-                    )
-                )
-                await mes2.edit(f"Generating thumbnail ...")
-                #await asyncio.sleep(5)
-                
-                #out, err, rcode, pid = await execute(f"ffmpeg -i /Downloads/aaa.mkv -c copy /Downloads/bbb.mp4 -y")
-                #if rcode != 0:
-                    #await mes2.edit(f"**FFmpeg: Error Occured.**`{err}`\n`{out}`\n`{rcode}`\n`{pid}`")
-                    #os.remove("/Downloads/aaa.mkv")
-                    #return
-                
-                #file_path2 = "/Downloads/bbb.mp4"
-                size_of_file = os.path.getsize(file_path)
-                size = get_size(size_of_file)
-                #await mes2.edit(f"Generating thumbnail ...`{err}`\n`{out}`\n`{rcode}`\n`{pid}`\n\n[{size}]")
-                #await mes2.edit(f"Generating thumbnail ...")
-                #await asyncio.sleep(5)
-                probe = await stream_creator(file_path)
-                video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
-                width = int(video_stream['width'] if 'width' in video_stream else 0)
-                height = int(video_stream['height'] if 'height' in video_stream else 0)
-                thumbnail = await thumb_creator(file_path)
-                fnext = fn + ".mp4"
-                duration = int(float(probe["format"]["duration"]))                
-                c_time = time.time()
-                await mes2.edit(f"Trying to Upload as Video ...")
-                #await asyncio.sleep(5)
                 await bot.send_video(
                     chat_id=m.chat.id,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        "Uploading Status ...",
-                        mes2,
-                        c_time
-                    ),
                     file_name=fnext,
                     video=file_path,
                     width=width,
                     height=height,
                     duration=duration,
                     thumb=str(thumbnail),
-                    caption=f"`{fnext}` [{size}]",
-                    reply_to_message_id=m.message_id
+                    caption=f"`{fnext}` [{fsize}]",
+                    reply_to_message_id=m.message_id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        "⬆️ Uploading Status ...",
+                        mes2,
+                        c_time
+                    )
                 )
                 await mes2.delete()
-                #os.remove("/Downloads/aaa.mkv")
-                os.remove(file_path)
+                try:
+                    os.remove(file_path)
+                except:
+                    pass
             except Exception as e:
-                await mes2.edit(f"Uploading as Video Failed **Error:**\n\n{e}")
+                await mes2.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
+                try:
+                    os.remove(file_path)
+                except:
+                    pass
         else:
             await m.reply_text(text=f"Wrong File Type ...")
             return
