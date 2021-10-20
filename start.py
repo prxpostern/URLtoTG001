@@ -97,8 +97,8 @@ async def video_renamer(bot , u):
                     newname = newname.strip() + ".mp4"
                     msg1 = await u.reply_text(text=f"Current Filename: `{oldname}` [{fsize}]\nNew Name: `{newname}`")
                     msg2 = await u.reply_text(text=f"Trying To Download Media")
-                    if not os.path.isdir(download_path):
-                        os.mkdir(download_path)
+                    #if not os.path.isdir(download_path):
+                    #    os.mkdir(download_path)
                     c_time = time.time()
                     file_path = await bot.download_media(
                         m,
@@ -110,14 +110,16 @@ async def video_renamer(bot , u):
                             c_time
                         )
                     )
-                    if not "Downloads/" in file_path:
+                    if not file_path:
                         await msg1.delete()
                         await msg2.edit(f"Download Failed !")
                         try:
                             os.remove(file_path)
                         except:
                             pass
+                        return
                     else:
+                        await msg2.edit(f"🌄 Generating thumbnail ...")
                         probe = await stream_creator(file_path)
                         video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
                         width = int(video_stream['width'] if 'width' in video_stream else 0)
@@ -125,7 +127,7 @@ async def video_renamer(bot , u):
                         thumbnail = await thumb_creator(file_path)
                         duration = int(float(probe["format"]["duration"]))
                         try:
-                            await msg2.edit(f"Trying to Upload as Video ...")
+                            await msg2.edit(f"⬆️ Trying to Upload as Video ...")
                             c_time = time.time()
                             await bot.send_video(
                                 chat_id=m.chat.id,
@@ -139,7 +141,7 @@ async def video_renamer(bot , u):
                                 reply_to_message_id=m.message_id,
                                 progress=progress_for_pyrogram,
                                 progress_args=(
-                                    "Uploading Status ...",
+                                    "⬆️ Uploading Status ...",
                                     msg2,
                                     c_time
                                 )
@@ -152,11 +154,14 @@ async def video_renamer(bot , u):
                                 pass
                         except Exception as e:
                             await msg1.delete()
-                            await msg2.edit(f"Uploading as Video Failed **Error:**\n\n{e}")
+                            await msg2.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
                             try:
                                 os.remove(file_path)
                             except:
                                 pass
+    else:
+        await m.reply_text(text=f"Please Reply To Video !\nMimeType: {ft.mime_type}")
+        return
 
 @bot.on_message(filters.command(["c2v"]))
 async def to_video(bot , u):
