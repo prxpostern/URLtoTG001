@@ -60,7 +60,7 @@ async def help(bot , m):
 async def video_renamer(bot , u):
     
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Video !\nExample:\n`**/rename_video | <onlyfilename>**`")
+        await u.reply_text(text=f"Reply To Your Video !\nExample:\n`/rename_video | onlyfilename`")
         return
     
     m = u.reply_to_message
