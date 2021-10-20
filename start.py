@@ -88,7 +88,7 @@ async def video_renamer(bot , u):
                 await u.reply_text(text=f"Please Type New Filename !\nExample:\n`**/rename_video | <onlyfilename>**`")
                 return
             else:
-                cmd , newname = m.text.split("|", 1)
+                cmd , newname = u.text.split("|", 1)
                 cmd = cmd.strip()
                 if os.path.splitext(newname)[1]:
                     await u.reply_text(text=f"Dont Type Extension !\nExample:\n`**/rename_video | <onlyfilename>**`")
