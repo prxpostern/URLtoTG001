@@ -112,6 +112,12 @@ async def leecher2(bot , u):
                 caption=f"`{filename}` [{size}]",
                 reply_to_message_id=m.message_id
             )
+            await msg.delete()
+            try:
+              os.remove(file_path)
+            except:
+              pass
+            return
         except Exception as e:
             fsw = "app"
             await msg.edit(f"Uploading as Video Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
@@ -140,6 +146,12 @@ async def leecher2(bot , u):
                 caption=f"`{filename}` [{size}]",
                 reply_to_message_id=m.message_id
             )
+            await msg.delete()
+            try:
+              os.remove(file_path)
+            except:
+              pass
+            return
         except Exception as e:
             fsw = "app"
             await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
