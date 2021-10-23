@@ -1,13 +1,20 @@
-## URLtoTG001 (Bot)
+## URLtoTG002 (Bot)
 ---
 
-A Simple Telegram Bot to Upload Files From Direct Links.
+A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media to Video, and Rename Audio/Video/Document Files.
 
 **Features**:
 
-👉 Upload Remote URL to Telegram.
+👉 /upload : Upload Remote URL to Telegram.
 
-👉 Convert Document media to Video .
+👉 /c2v : Convert Document media to Video .
+
+👉 /rnv : Rename Video Files.
+
+👉 /rna : Rename Audio Files and Edit Tags. (Developing)
+
+👉 /rnf : Rename All Files. (Developing)
+
 
 #### LICENSE
 - GPLv3
@@ -16,4 +23,4 @@ A Simple Telegram Bot to Upload Files From Direct Links.
 
 ### 💜 Heroku
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/prxpostern/URLtoTG001)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/prxpostern/URLtoTG002)
