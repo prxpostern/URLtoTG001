@@ -18,6 +18,8 @@ from helpers.tools import execute
 from helpers.ffprobe import stream_creator
 from helpers.thumbnail_video import thumb_creator
 
+download_path = "Downloads/"
+
 async def leecher2(bot , u):
     if not u.reply_to_message:
         await u.reply_text(text=f"Reply To Your Direct Link !")
