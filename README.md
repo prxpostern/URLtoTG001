@@ -24,3 +24,7 @@ A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media 
 ### 💜 Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/prxpostern/URLtoTG001)
+
+### 💜 Railway
+
+[![Deploy To Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/prxpostern/URLtoTG001&envs=API_ID,API_HASH,BOT_TOKEN)
