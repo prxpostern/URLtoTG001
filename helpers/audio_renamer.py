@@ -55,13 +55,13 @@ async def rna2(bot , u):
                   cmd, newname = u.text.split("|", 1)
                   newname = newname.strip()
                   
-                  if ft.title:
-                    newtitle = ft.title
+                  if m.audio and m.audio.title:
+                    newtitle = m.audio.title
                   else:
                     newtitle = " "
                   
-                  if ft.performer:
-                    newartist = ft.performer
+                  if m.audio and m.audio.performer:
+                    newartist = m.audio.performer
                   else:
                     newartist = " "
 
@@ -70,8 +70,8 @@ async def rna2(bot , u):
                   newname = newname.strip()
                   newtitle = newtitle.strip()
                   
-                  if ft.performer:
-                    newartist = ft.performer
+                  if m.audio and m.audio.performer:
+                    newartist = m.audio.performer
                   else:
                     newartist = " "
 
@@ -115,8 +115,8 @@ async def rna2(bot , u):
                         return
                     else:
                         try:
-                            if ft.duration:
-                              duration = ft.duration
+                            if m.audio and m.audio.duration:
+                              duration = m.audio.duration
                             else:
                               duration = 0
                               metadata = extractMetadata(createParser(file_path))
