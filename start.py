@@ -55,11 +55,12 @@ A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media 
     
     `/rnv | videoname`
     
-/rna : reply to your audio. use `-` for leave without change
+/rna : reply to your audio. \"`-`\" : leave without change.
 
     `/rna | audioname | title(optional) | artists(optional)`
-    `/rna | - | title(optional) | artists(optional)`
-    `/rna | - | - | artists(optional)`
+    `/rna | audioname`
+    `/rna | - | title`
+    `/rna | - | - | artists`
     
 /rnf : reply to your document. Example:
 
