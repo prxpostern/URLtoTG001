@@ -54,6 +54,10 @@ async def rna2(bot , u):
                 if len(args) == 2:
                   cmd, newname = u.text.split("|", 1)
                   newname = newname.strip()
+                  if newname == "-":
+                    await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                    return
+                    #newname = oldname
                   
                   if m.audio and m.audio.title:
                     newtitle = m.audio.title
@@ -70,16 +74,50 @@ async def rna2(bot , u):
                   newname = newname.strip()
                   newtitle = newtitle.strip()
                   
+                  if newname == "-":
+                    if newtitle == "-":
+                      await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                      return  
+                  
+                  if newname == "-":
+                    newname = os.path.splitext(oldname)[0]
+                  if newtitle == "-":
+                    if m.audio and m.audio.title:
+                      newtitle = m.audio.title
+                    else:
+                      newtitle = " "
+                  
                   if m.audio and m.audio.performer:
                     newartist = m.audio.performer
                   else:
                     newartist = " "
 
                 elif len(args) == 4:
+                  newtitle = " "
+                  newartist = " "
                   cmd, newname, newtitle, newartist = u.text.split("|", 3)
                   newname = newname.strip()
                   newtitle = newtitle.strip()
                   newartist = newartist.strip()
+                  if newname == "-":
+                    if newtitle == "-":
+                      if newartist == "-":
+                        await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                        return
+                  if newname == "-":
+                    newname = os.path.splitext(oldname)[0]
+                    
+                  if newtitle == "-":
+                    if m.audio and m.audio.title:
+                      newtitle = m.audio.title
+                    else:
+                      newtitle = " "
+                      
+                  if newartist == "-":
+                    if m.audio and m.audio.performer:
+                      newartist = m.audio.performer
+                    else:
+                      newartist = " "
 
                 else:
                   await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
@@ -90,10 +128,9 @@ async def rna2(bot , u):
                     return
                 else:
                     newname = newname + ".mp3"
-                    #msg1 = await m.reply_text(text=f"Current Filename: `{oldname}` [{fsize}]\nNew Name: `{newname}`")
+
                     msg2 = await m.reply_text(text=f"⬇️ Trying To Download Audio")
-                    #if not os.path.isdir(download_path):
-                    #    os.mkdir(download_path)
+
                     c_time = time.time()
                     file_path = await bot.download_media(
                         m,
@@ -136,19 +173,17 @@ async def rna2(bot , u):
                               reply_to_message_id=m.message_id,
                               progress=progress_for_pyrogram,
                               progress_args=(
-                                f"⬆️Uploading Status ...",
+                                f"⬆️ Uploading Status ...",
                                 msg2,
                                 c_time
                               )
                             )
-                            #await msg1.delete()
                             await msg2.delete()
                             try:
                                 os.remove(file_path)
                             except:
                                 pass
                         except Exception as e:
-                            #await msg1.delete()
                             await msg2.edit(f"❌ Uploading as Audio Failed **Error:**\n\n{e}\n\n{metadata}")
                             try:
                                 os.remove(file_path)
