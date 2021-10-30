@@ -11,9 +11,9 @@ A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media 
 
 👉 /rnv : Rename Video Files.
 
-👉 /rna : Rename Audio Files and Edit Tags. (Developing)
+👉 /rna : Rename Audio Files and Edit Tags.
 
-👉 /rnf : Rename All Files. (Developing)
+👉 /rnf : Rename All Files.
 
 
 #### LICENSE
