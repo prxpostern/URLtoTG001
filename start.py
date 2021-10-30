@@ -63,7 +63,7 @@ A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media 
     
 /rnf : reply to your document. Example:
 
-    `/rnv | filename.ext`
+    `/rnf | filename.ext`
 """
 
 @bot.on_message(filters.command(["start"]))
