@@ -42,28 +42,27 @@ async def leecher2(bot , u):
     
     msg = await m.reply_text(text=f"Analyzing Your Link ...")
     
-    try:        
-        #if not os.path.isdir(download_path):
-        #    os.mkdir(download_path)
-        
-        start = time.time()
-        filename = os.path.join(download_path, os.path.basename(url))
-        filename = filename.replace('%25','_')
-        filename = filename.replace(' ','_')
-        filename = filename.replace('%40','@')
+    filename = os.path.join(download_path, os.path.basename(url))
+    filename = filename.replace('%25','_')
+    filename = filename.replace(' ','_')
+    filename = filename.replace('%40','@')
+    await msg.edit(f"Successfully Downloaded .")
+    
+    start = time.time()
+    try:
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
-        await msg.edit(f"Successfully Downloaded .")
-        filename = os.path.basename(file_path)
-        filename = filename.replace('%40','@')
-        filename = filename.replace('%25','_')
-        filename = filename.replace(' ','_')
     except Exception as e:
         print(e)
-        await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")        
+        await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
+        return
+    
+    filename = os.path.basename(file_path)
+    filename = filename.replace('%40','@')
+    filename = filename.replace('%25','_')
+    filename = filename.replace(' ','_')
     
     mt = mimetypes.guess_type(str(file_path))[0]
-    
     if mt and mt.startswith("video/"):
         fsw = "vid"
     elif mt and mt.startswith("audio/"):
