@@ -64,7 +64,16 @@ async def leecher2(bot , u):
     
     if sw == "gd":
         file_path = os.path.join(download_path, cfname)
-        gdown.download(url, file_path, quiet=False)
+        if '/file/d/' in url:
+            url2 = url.split("/file/d/", 1)[1]
+            gid = url2.split("/", 1)[0]
+            url = "https://drive.google.com/u/0/uc?id=" + str(gid) + "&export=download"
+            gdown.download(url, file_path, quiet=False)
+        elif 'uc?id' in url:
+            gdown.download(url, file_path, quiet=False)
+        else:
+            await msg.edit(f"❌ Download Failed ! \n\n **Error:** {e}")
+            return
     await msg.edit(f"✅ **Successfully Downloaded**")
     filename = os.path.basename(file_path)
     filename = filename.replace('%40','@')
