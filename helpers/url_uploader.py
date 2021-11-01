@@ -54,11 +54,12 @@ async def leecher2(bot , u):
         file_path = await download_file(url, filename, msg, start, bot)
         print(f"file downloaded to {file_path} with name: {filename}")
     except Exception as e:
-        print(e)
-        await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
         if 'drive.google.com' in url:
+            await msg.edit(f"Google Drive Link Detected !\n\n`Downloading ...`\n\n**Please Wait.**")
             sw = "gd"
         else:
+            print(e)
+            await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
             return
     
     if sw == "gd":
