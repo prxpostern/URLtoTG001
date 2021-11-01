@@ -9,3 +9,4 @@ hachoir
 pyromod
 Pillow
 ffmpeg
+gdown
