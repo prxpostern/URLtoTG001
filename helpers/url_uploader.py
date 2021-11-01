@@ -14,6 +14,7 @@ import datetime
 import aiohttp
 import asyncio
 import mimetypes
+import gdown
 from helpers.tools import execute
 from helpers.ffprobe import stream_creator
 from helpers.thumbnail_video import thumb_creator
@@ -25,6 +26,7 @@ async def leecher2(bot , u):
         await u.reply_text(text=f"Reply To Your Direct Link !")
         return
     
+    sw = "direct"
     m = u.reply_to_message
     
     if "|" in m.text:
@@ -41,7 +43,7 @@ async def leecher2(bot , u):
             return
     
     msg = await m.reply_text(text=f"`Analyzing Your Link ...`")
-    
+
     filename = os.path.join(download_path, os.path.basename(url))
     filename = filename.replace('%25','_')
     filename = filename.replace(' ','_')
@@ -54,8 +56,14 @@ async def leecher2(bot , u):
     except Exception as e:
         print(e)
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
-        return
+        if 'drive.google.com' in url:
+            sw = "gd"
+        else:
+            return
     
+    if sw == "gd":
+        file_path = os.path.join(download_path, cfname)
+        gdown.download(url, file_path, quiet=False)
     await msg.edit(f"✅ **Successfully Downloaded**")
     filename = os.path.basename(file_path)
     filename = filename.replace('%40','@')
