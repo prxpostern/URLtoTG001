@@ -37,17 +37,16 @@ async def leecher2(bot , u):
         if os.path.splitext(url)[1]:
             ofn = os.path.basename(url)
         else:
-            await m.reply_text(text=f"I Could nott Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help")
+            await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help")
             return
     
-    msg = await m.reply_text(text=f"Analyzing Your Link ...")
+    msg = await m.reply_text(text=f"`Analyzing Your Link ...`")
     
     filename = os.path.join(download_path, os.path.basename(url))
     filename = filename.replace('%25','_')
     filename = filename.replace(' ','_')
     filename = filename.replace('%40','@')
-    await msg.edit(f"Successfully Downloaded .")
-    
+  
     start = time.time()
     try:
         file_path = await download_file(url, filename, msg, start, bot)
@@ -57,6 +56,7 @@ async def leecher2(bot , u):
         await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
         return
     
+    await msg.edit(f"✅ **Successfully Downloaded**")
     filename = os.path.basename(file_path)
     filename = filename.replace('%40','@')
     filename = filename.replace('%25','_')
@@ -89,16 +89,16 @@ async def leecher2(bot , u):
             width = int(video_stream['width'] if 'width' in video_stream else 0)
             height = int(video_stream['height'] if 'height' in video_stream else 0)
             duration = int(float(probe["format"]["duration"]))
-            await msg.edit(f"Generating thumbnail ...")
+            await msg.edit(f"🏞 Generating thumbnail")
             thumbnail = await thumb_creator(file_path)
-            
+
+            await msg.edit(f"⬆️ Trying to Upload as Video ...")
             start = time.time()
-            await msg.edit(f"Uploading as Video ...")
             await bot.send_video(
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as Video Started ...",
+                    "⬆️ Uploading as Video:",
                     msg,
                     start
                 ),
@@ -119,7 +119,7 @@ async def leecher2(bot , u):
             return
         except Exception as e:
             fsw = "app"
-            await msg.edit(f"Uploading as Video Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
+            await msg.edit(f"❌ Uploading as Video Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
             await asyncio.sleep(3)
     
     if fsw == "aud":
@@ -130,12 +130,12 @@ async def leecher2(bot , u):
                 duration = metadata.get("duration").seconds
 
             start = time.time()
-            await msg.edit(f"Uploading as Audio ...")
+            await msg.edit(f"⬆️ Trying to Upload as Audio ...")
             await bot.send_audio(
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as Audio Started ...",
+                    "⬆️ Uploading as Audio:",
                     msg,
                     start
                 ),
@@ -153,18 +153,18 @@ async def leecher2(bot , u):
             return
         except Exception as e:
             fsw = "app"
-            await msg.edit(f"Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
+            await msg.edit(f"❌ Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
             await asyncio.sleep(3)
     
     if fsw == "app":
         try:
             start = time.time()
-            await msg.edit(f"Uploading as File ...")
+            await msg.edit(f"⬆️ Trying to Upload as Document ...")
             await bot.send_document(
                 chat_id=m.chat.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Uploading as File Started ...",
+                    "⬆️ Uploading as Document:",
                     msg,
                     start
                 ),
@@ -180,7 +180,7 @@ async def leecher2(bot , u):
             except:
               pass
         except Exception as e:
-            await msg.edit(f"Uploading as File Failed **Error:** {e}")
+            await msg.edit(f"❌ Uploading as File Failed **Error:** {e}")
             try:
               os.remove(file_path)
             except:
