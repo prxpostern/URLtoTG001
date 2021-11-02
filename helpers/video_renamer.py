@@ -21,14 +21,14 @@ from helpers.thumbnail_video import thumb_creator
 async def rnv2(bot , u):
     
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Video !\n\nExample:\n**/rnv | onlyfilename**")
+        await u.reply_text(text=f"Reply To Your Video !\n\nExample:\n**/rnv | onlyfilename**", quote=True)
         return
     
     m = u.reply_to_message
     ft = m.document or m.video
     fsize = get_size(ft.file_size)
     if m.audio or m.photo or m.voice or m.location or m.contact:
-        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}")
+        await m.reply_text(text=f"Please Reply To Video !\n\nSee /help", quote=True)
         return
     else:
         tempname = "Video_CHATID" + str(m.chat.id) + "_DATE" + str(m.date) + ".mp4"
@@ -42,22 +42,22 @@ async def rnv2(bot , u):
 
     if ft.mime_type.startswith("video/"):
         if not "|" in u.text:
-            await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**")
+            await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**", quote=True)
             return
         else:
             args = u.text.split("|")
             if len(args) <= 1:
-                await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**")
+                await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**", quote=True)
                 return
             else:
                 cmd , newname = u.text.split("|", 1)
                 cmd = cmd.strip()
                 if os.path.splitext(newname)[1]:
-                    await m.reply_text(text=f"Dont Type Extension !\n\nExample:\n**/rnv | onlyfilename**")
+                    await m.reply_text(text=f"Dont Type Extension !\n\nExample:\n**/rnv | onlyfilename**", quote=True)
                     return
                 else:
                     newname = newname.strip() + ".mp4"
-                    msg2 = await m.reply_text(text=f"⬇️ Trying To Download Video")
+                    msg2 = await m.reply_text(text=f"⬇️ Trying To Download Video", quote=True)
                     c_time = time.time()
                     file_path = await bot.download_media(
                         m,
@@ -116,5 +116,5 @@ async def rnv2(bot , u):
                             except:
                                 pass
     else:
-        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}")
+        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}", quote=True)
         return
