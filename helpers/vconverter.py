@@ -20,7 +20,7 @@ from helpers.thumbnail_video import thumb_creator
 
 async def to_video2(bot , u):
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Media !")
+        await u.reply_text(text=f"Reply To Your Video !")
         return
     m = u.reply_to_message
     if m.audio or m.photo or m.voice or m.location or m.contact:
@@ -77,7 +77,7 @@ async def to_video2(bot , u):
                     reply_to_message_id=m.message_id,
                     progress=progress_for_pyrogram,
                     progress_args=(
-                        "⬆️ Uploading Status ...",
+                        "⬆️ Uploading as Video:",
                         mes2,
                         c_time
                     )
@@ -94,5 +94,5 @@ async def to_video2(bot , u):
                 except:
                     pass
         else:
-            await m.reply_text(text=f"Wrong File Type ...")
+            await m.reply_text(text=f"Wrong Filetype ...")
             return
