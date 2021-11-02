@@ -24,7 +24,7 @@ async def to_video2(bot , u):
         return
     m = u.reply_to_message
     if m.audio or m.photo or m.voice or m.location or m.contact:
-        await m.reply_text(text=f"Wrong File Type ...")
+        await m.reply_text(text=f"Wrong File Type !\n\nMimeType: {ft.mime_type}")
         return
     else:  
         ft = m.document or m.video
@@ -94,5 +94,5 @@ async def to_video2(bot , u):
                 except:
                     pass
         else:
-            await m.reply_text(text=f"Wrong Filetype ...")
+            await m.reply_text(text=f"Wrong File Type !\n\nMimeType: {ft.mime_type}")
             return
