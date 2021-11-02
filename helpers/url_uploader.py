@@ -23,7 +23,7 @@ download_path = "Downloads/"
 
 async def leecher2(bot , u):
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Direct Link !")
+        await u.reply_text(text=f"Reply To Your Direct Link !", quote=True)
         return
     
     sw = "direct"
@@ -39,10 +39,10 @@ async def leecher2(bot , u):
         if os.path.splitext(url)[1]:
             ofn = os.path.basename(url)
         else:
-            await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help")
+            await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
             return
     
-    msg = await m.reply_text(text=f"`Analyzing Your Link ...`")
+    msg = await m.reply_text(text=f"`Analyzing Your Link ...`", quote=True)
 
     filename = os.path.join(download_path, os.path.basename(url))
     filename = filename.replace('%25','_')
