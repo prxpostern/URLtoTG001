@@ -72,7 +72,7 @@ async def leecher2(bot , u):
             url = "https://drive.google.com/u/0/uc?id=" + str(gid) + "&export=download"
             gdown.download(url, file_path, quiet=False)
         else:
-            await msg.edit(f"❌ Gdrive Link is Corrupted ! \n\n **Error:** {e}")
+            await msg.edit(f"❌ Gdrive Link is Invalid ! \n\n **Error:** {e}")
             return
     await msg.edit(f"✅ **Successfully Downloaded**")
     filename = os.path.basename(file_path)
