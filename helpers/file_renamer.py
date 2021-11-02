@@ -21,27 +21,27 @@ from helpers.thumbnail_video import thumb_creator
 async def rnf2(bot , u):
   
   if not u.reply_to_message:
-    await u.reply_text(text=f"Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**")
+    await u.reply_text(text=f"Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**", quote=True)
     return
   
   m = u.reply_to_message
   
   if m.video:
-    await u.reply_text(text=f"MimeType: {m.video.mime_type}\n\nUse `/rnv` to rename a video file.\nUse `/c2v` for converting a document to video.\nSee /help")
+    await m.reply_text(text=f"MimeType: {m.video.mime_type}\n\nUse `/rnv` to rename a video file.\nUse `/c2v` for converting a document to video.\nSee /help", quote=True)
     return
   elif m.audio:
-    await u.reply_text(text=f"MimeType: {m.audio.mime_type}\n\nUse `/rna` to rename an audio file.\nSee /help")
+    await m.reply_text(text=f"MimeType: {m.audio.mime_type}\n\nUse `/rna` to rename an audio file.\nSee /help", quote=True)
     return
   elif m.document:
     ft = m.document
   else:
-    await u.reply_text(text=f"Wrong Filetype !\n\nSee /help")
+    await m.reply_text(text=f"Wrong Filetype !\n\nSee /help", quote=True)
     return
 
   fsize = get_size(ft.file_size)
   
   if not "|" in u.text:
-    await m.reply_text(text=f"Please Type New Filename with extension !\n\nExample:\n**/rnf | filename.ext**")
+    await m.reply_text(text=f"Please Type New Filename with extension !\n\nExample:\n**/rnf | filename.ext**", quote=True)
     return
   else:
     args = u.text.split("|")
@@ -49,7 +49,7 @@ async def rnf2(bot , u):
       cmd , newname = u.text.split("|", 1)
       newname = newname.strip()
       if not os.path.splitext(newname)[1]:
-        await m.reply_text(text=f"Type Extension !\n\nExample:\n**/rnf | filename.ext**")
+        await m.reply_text(text=f"Type Extension !\n\nExample:\n**/rnf | filename.ext**", quote=True)
         return
       else:
         ext = os.path.splitext(newname)[1]
@@ -61,7 +61,7 @@ async def rnf2(bot , u):
             oldname = oldname.replace(' ','_')
         else:
             oldname = "File_CHATID" + str(m.chat.id) + "_DATE" + str(m.date) + str(ext)
-        msg = await m.reply_text(text=f"⬇️ Trying To Download Document")
+        msg = await m.reply_text(text=f"⬇️ Trying To Download Document", quote=True)
         c_time = time.time()
         file_path = await bot.download_media(
           m,
@@ -108,5 +108,5 @@ async def rnf2(bot , u):
           except:
             pass
     else:
-      await m.reply_text(text=f"Try Again !\n\nExample:\n**/rnf | filename.ext**")
+      await m.reply_text(text=f"Try Again !\n\nExample:\n**/rnf | filename.ext**", quote=True)
       return
