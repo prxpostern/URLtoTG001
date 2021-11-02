@@ -116,5 +116,5 @@ async def rnv2(bot , u):
                             except:
                                 pass
     else:
-        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}", quote=True)
+        await m.reply_text(text=f"Please Reply To Video !\n\nSee /help", quote=True)
         return
