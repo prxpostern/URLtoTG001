@@ -21,11 +21,23 @@ from helpers.thumbnail_video import thumb_creator
 async def rnf2(bot , u):
   
   if not u.reply_to_message:
-    await u.reply_text(text=f"Reply To Your File !\n\nExample:\n**/rnf | filename.ext**")
+    await u.reply_text(text=f"Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**")
     return
-    
+  
   m = u.reply_to_message
-  ft = m.document
+  
+  if m.video:
+    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nUse `/rnv` to rename a video file.\nUse `/c2v` for converting a document to video.\nSee /help")
+    return
+  elif m.audio:
+    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nUse `/rna` to rename an audio file.\nSee /help")
+    return
+  elif m.document:
+    ft = m.document
+  else:
+    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nSee /help")
+    return
+
   fsize = get_size(ft.file_size)
   
   if not "|" in u.text:
@@ -49,20 +61,20 @@ async def rnf2(bot , u):
             oldname = oldname.replace(' ','_')
         else:
             oldname = "File_CHATID" + str(m.chat.id) + "_DATE" + str(m.date) + str(ext)
-        msg = await m.reply_text(text=f"⬇️ Trying To Download File")
+        msg = await m.reply_text(text=f"⬇️ Trying To Download Document")
         c_time = time.time()
         file_path = await bot.download_media(
           m,
           file_name=tempname,
           progress=progress_for_pyrogram,
           progress_args=(
-            "⬇️ Downloading Status ...",
+            "⬇️ Downloading Document:",
             msg,
             c_time
           )
         )
         if not file_path:
-          await msg.edit(f"⬇️ Download Failed !")
+          await msg.edit(f"❌ Downloading Document Failed !")
           try:
             os.remove(file_path)
           except:
@@ -79,7 +91,7 @@ async def rnf2(bot , u):
             reply_to_message_id=m.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-              "⬆️ Uploading Status ...",
+              "⬆️ Uploading as Document:",
               msg,
               c_time
             )
