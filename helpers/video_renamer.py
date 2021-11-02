@@ -21,14 +21,14 @@ from helpers.thumbnail_video import thumb_creator
 async def rnv2(bot , u):
     
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Video !\nExample:\n**/rnv | onlyfilename**")
+        await u.reply_text(text=f"Reply To Your Video !\n\nExample:\n**/rnv | onlyfilename**")
         return
     
     m = u.reply_to_message
     ft = m.document or m.video
     fsize = get_size(ft.file_size)
     if m.audio or m.photo or m.voice or m.location or m.contact:
-        await m.reply_text(text=f"Please Reply To Video !\nMimeType: {ft.mime_type}")
+        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}")
         return
     else:
         tempname = "Video_CHATID" + str(m.chat.id) + "_DATE" + str(m.date) + ".mp4"
@@ -42,39 +42,35 @@ async def rnv2(bot , u):
 
     if ft.mime_type.startswith("video/"):
         if not "|" in u.text:
-            await m.reply_text(text=f"Please Type New Filename !\nExample:\n**/rnv | onlyfilename**")
+            await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**")
             return
         else:
             args = u.text.split("|")
             if len(args) <= 1:
-                await m.reply_text(text=f"Please Type New Filename !\nExample:\n**/rnv | onlyfilename**")
+                await m.reply_text(text=f"Please Type New Filename !\n\nExample:\n**/rnv | onlyfilename**")
                 return
             else:
                 cmd , newname = u.text.split("|", 1)
                 cmd = cmd.strip()
                 if os.path.splitext(newname)[1]:
-                    await m.reply_text(text=f"Dont Type Extension !\nExample:\n**/rnv | onlyfilename**")
+                    await m.reply_text(text=f"Dont Type Extension !\n\nExample:\n**/rnv | onlyfilename**")
                     return
                 else:
                     newname = newname.strip() + ".mp4"
-                    #msg1 = await u.reply_text(text=f"Current Filename: `{oldname}` [{fsize}]\nNew Name: `{newname}`")
                     msg2 = await m.reply_text(text=f"⬇️ Trying To Download Video")
-                    #if not os.path.isdir(download_path):
-                    #    os.mkdir(download_path)
                     c_time = time.time()
                     file_path = await bot.download_media(
                         m,
                         file_name=tempname,
                         progress=progress_for_pyrogram,
                         progress_args=(
-                            "⬇️ Downloading Status ...",
+                            "⬇️ Downloading Video:",
                             msg2,
                             c_time
                         )
                     )
                     if not file_path:
-                        #await msg1.delete()
-                        await msg2.edit(f"⬇️ Download Failed !")
+                        await msg2.edit(f"⬇️ Downloading Video Failed !")
                         try:
                             os.remove(file_path)
                         except:
@@ -103,24 +99,22 @@ async def rnv2(bot , u):
                                 reply_to_message_id=m.message_id,
                                 progress=progress_for_pyrogram,
                                 progress_args=(
-                                    "⬆️ Uploading Status ...",
+                                    "⬆️ Uploading as Video:",
                                     msg2,
                                     c_time
                                 )
                             )
-                            #await msg1.delete()
                             await msg2.delete()
                             try:
                                 os.remove(file_path)
                             except:
                                 pass
                         except Exception as e:
-                            #await msg1.delete()
                             await msg2.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
                             try:
                                 os.remove(file_path)
                             except:
                                 pass
     else:
-        await m.reply_text(text=f"Please Reply To Video !\nMimeType: {ft.mime_type}")
+        await m.reply_text(text=f"Please Reply To Video !\n\nMimeType: {ft.mime_type}")
         return
