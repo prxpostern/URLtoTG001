@@ -20,11 +20,12 @@ from helpers.thumbnail_video import thumb_creator
 
 async def to_video2(bot , u):
     if not u.reply_to_message:
-        await u.reply_text(text=f"Reply To Your Video !")
+        await u.reply_text(text=f"Reply To Your Video !", quote=True)
         return
+    
     m = u.reply_to_message
     if m.audio or m.photo or m.voice or m.location or m.contact:
-        await m.reply_text(text=f"Wrong File Type !\n\nMimeType: {ft.mime_type}")
+        await m.reply_text(text=f"Wrong File Type !\n\nSee /help", quote=True)
         return
     else:  
         ft = m.document or m.video
@@ -40,7 +41,7 @@ async def to_video2(bot , u):
         fn = os.path.splitext(fullname)[0]
         if ft.mime_type.startswith("video/"):
             mes2 = await m.reply_text(
-                text=f"**Processing...**",
+                text=f"⬇️ Trying To Download Video ...",
                 quote=True
             )
             c_time = time.time()
@@ -49,7 +50,7 @@ async def to_video2(bot , u):
                 file_name=tempname,
                 progress=progress_for_pyrogram,
                 progress_args=(
-                    "Downloading Status ...",
+                    "⬇️ Downloading Video:",
                     mes2,
                     c_time
                 )
@@ -94,5 +95,5 @@ async def to_video2(bot , u):
                 except:
                     pass
         else:
-            await m.reply_text(text=f"Wrong File Type !\n\nMimeType: {ft.mime_type}")
+            await m.reply_text(text=f"Wrong File Type !\n\nSee /help", quote=True)
             return
