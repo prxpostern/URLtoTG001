@@ -59,22 +59,20 @@ async def leecher2(bot , u):
             sw = "gd"
         else:
             print(e)
-            await msg.edit(f"Download link is invalid or not accessible ! \n\n **Error:** {e}")
+            await msg.edit(f"Download Link is Invalid or not Accessible !\n\n**Error:** {e}")
             return
     
     if sw == "gd":
         file_path = os.path.join(download_path, cfname)
-        if '/file/d/' in url:
-            oldurl = url
+        if 'uc?id' in url:
+            gdown.download(url, file_path, quiet=False)
+        elif '/file/d/' in url:
             url2 = url.split("/file/d/", 1)[1]
             gid = url2.split("/", 1)[0]
             url = "https://drive.google.com/u/0/uc?id=" + str(gid) + "&export=download"
             gdown.download(url, file_path, quiet=False)
-            url = oldurl
-        elif 'uc?id' in url:
-            gdown.download(url, file_path, quiet=False)
         else:
-            await msg.edit(f"❌ Download Failed ! \n\n **Error:** {e}")
+            await msg.edit(f"❌ Gdrive Link is Corrupted ! \n\n **Error:** {e}")
             return
     await msg.edit(f"✅ **Successfully Downloaded**")
     filename = os.path.basename(file_path)
@@ -173,7 +171,7 @@ async def leecher2(bot , u):
             return
         except Exception as e:
             fsw = "app"
-            await msg.edit(f"❌ Uploading as Audio Failed **Error:** {e} \n Trying to Upload as File in 3 second!")
+            await msg.edit(f"❌ Uploading as Audio Failed **Error:** {e}\nTrying to Upload as Document in 3 second!")
             await asyncio.sleep(3)
     
     if fsw == "app":
@@ -200,7 +198,7 @@ async def leecher2(bot , u):
             except:
               pass
         except Exception as e:
-            await msg.edit(f"❌ Uploading as File Failed **Error:** {e}")
+            await msg.edit(f"❌ Uploading as Document Failed !\n\n**Error:** {e}")
             try:
               os.remove(file_path)
             except:
