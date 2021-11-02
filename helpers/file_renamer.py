@@ -27,15 +27,15 @@ async def rnf2(bot , u):
   m = u.reply_to_message
   
   if m.video:
-    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nUse `/rnv` to rename a video file.\nUse `/c2v` for converting a document to video.\nSee /help")
+    await u.reply_text(text=f"MimeType: {m.video.mime_type}\n\nUse `/rnv` to rename a video file.\nUse `/c2v` for converting a document to video.\nSee /help")
     return
   elif m.audio:
-    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nUse `/rna` to rename an audio file.\nSee /help")
+    await u.reply_text(text=f"MimeType: {m.audio.mime_type}\n\nUse `/rna` to rename an audio file.\nSee /help")
     return
   elif m.document:
     ft = m.document
   else:
-    await u.reply_text(text=f"MimeType: {ft.mime_type}\n\nSee /help")
+    await u.reply_text(text=f"Wrong Filetype !\n\nSee /help")
     return
 
   fsize = get_size(ft.file_size)
