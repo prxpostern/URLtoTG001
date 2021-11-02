@@ -41,15 +41,18 @@ if not os.path.isdir(download_path):
     os.mkdir(download_path)
 
 HELP_TXT = """
-A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media to Video, and Rename Audio/Video/Document Files.
+A Simple Telegram Bot to 
+Upload Files From **Direct** and **Google Drive** Links,
+Convert Document Media to Video,
+and Rename Audio/Video/Document Files.
 
-/upload : reply to your url to start uploading from direct link.
+/upload : reply to your url .
     
     `http://aaa.bbb.ccc/ddd.eee` | **fff.ggg**
     or
     `http://aaa.bbb.ccc/ddd.eee`
 
-/c2v : reply to your document To Convert It Into Streamable video File.
+/c2v : reply to your document to convert it into streamable video.
     
 /rnv : reply to your video. Example:
     
@@ -57,7 +60,7 @@ A Simple Telegram Bot to Upload Files From Direct Links, Convert Document media 
     
 /rna : reply to your audio. \"`-`\" : leave without change.
 
-    `/rna | audioname | title(optional) | artists(optional)`
+    `/rna | audioname | title | artists`
     `/rna | audioname`
     `/rna | - | title`
     `/rna | - | - | artists`
