@@ -57,7 +57,6 @@ async def rna2(bot , u):
                   if newname == "-":
                     await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
                     return
-                    #newname = oldname
                   
                   if m.audio and m.audio.title:
                     newtitle = m.audio.title
@@ -137,14 +136,13 @@ async def rna2(bot , u):
                         file_name=tempname,
                         progress=progress_for_pyrogram,
                         progress_args=(
-                            "⬇️ Downloading Status ...",
+                            "⬇️ Downloading Audio:",
                             msg2,
                             c_time
                         )
                     )
                     if not file_path:
-                        #await msg1.delete()
-                        await msg2.edit(f"❌ Download Failed !")
+                        await msg2.edit(f"❌ Downloading Audio Failed !")
                         try:
                             os.remove(file_path)
                         except:
@@ -173,7 +171,7 @@ async def rna2(bot , u):
                               reply_to_message_id=m.message_id,
                               progress=progress_for_pyrogram,
                               progress_args=(
-                                f"⬆️ Uploading Status ...",
+                                f"⬆️ Uploading as Audio:",
                                 msg2,
                                 c_time
                               )
@@ -184,7 +182,7 @@ async def rna2(bot , u):
                             except:
                                 pass
                         except Exception as e:
-                            await msg2.edit(f"❌ Uploading as Audio Failed **Error:**\n\n{e}\n\n{metadata}")
+                            await msg2.edit(f"❌ Uploading as Audio Failed **Error:**\n\n{e}")
                             try:
                                 os.remove(file_path)
                             except:
