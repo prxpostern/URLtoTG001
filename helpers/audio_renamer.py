@@ -21,7 +21,7 @@ from helpers.thumbnail_video import thumb_creator
 async def rna2(bot , u):
   
     if not u.reply_to_message:
-        await u.reply_text(text=f"Please Reply To Audio Files !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+        await u.reply_text(text=f"Please Reply To Audio Files !\n\nMimeType: {ft.mime_type}\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
         return
     
     m = u.reply_to_message
@@ -42,12 +42,12 @@ async def rna2(bot , u):
     
     if ft.mime_type.startswith("audio/"):
         if not "|" in u.text:
-            await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+            await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
             return
         else:
             args = u.text.split("|")
             if len(args) <= 1:
-                await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                 return
             else:
                 
@@ -55,7 +55,7 @@ async def rna2(bot , u):
                   cmd, newname = u.text.split("|", 1)
                   newname = newname.strip()
                   if newname == "-":
-                    await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                    await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                     return
                   
                   if m.audio and m.audio.title:
@@ -75,7 +75,7 @@ async def rna2(bot , u):
                   
                   if newname == "-":
                     if newtitle == "-":
-                      await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                      await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                       return  
                   
                   if newname == "-":
@@ -101,7 +101,7 @@ async def rna2(bot , u):
                   if newname == "-":
                     if newtitle == "-":
                       if newartist == "-":
-                        await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                        await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                         return
                   if newname == "-":
                     newname = os.path.splitext(oldname)[0]
@@ -119,11 +119,11 @@ async def rna2(bot , u):
                       newartist = " "
 
                 else:
-                  await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                  await m.reply_text(text=f"Try Again !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                   return
                 
                 if os.path.splitext(newname)[1]:
-                    await m.reply_text(text=f"Dont Type Extension !\n\nExample:\n**/rna | filename | title(optional) | artists(optional)**")
+                    await m.reply_text(text=f"Dont Type Extension !\n\nExample:\n**/rna | filename**\n**/rna | filename | title(optional) | artists(optional)**")
                     return
                 else:
                     newname = newname + ".mp3"
