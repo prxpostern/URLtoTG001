@@ -128,7 +128,7 @@ async def rna2(bot , u):
                 else:
                     newname = newname + ".mp3"
 
-                    msg2 = await m.reply_text(text=f"⬇️ Trying To Download Audio")
+                    msg2 = await m.reply_text(text=f"⬇️ Trying To Download Audio", quote=True)
 
                     c_time = time.time()
                     file_path = await bot.download_media(
