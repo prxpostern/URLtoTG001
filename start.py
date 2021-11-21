@@ -88,6 +88,8 @@ async def rnv1(bot , u):
     global AUTH_USERS
     if u.from_user.id in AUTH_USERS:
         await rnv2(bot,u)
+    elif not AUTH_USERS:
+        await rnv2(bot,u)
     else:
         await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
@@ -96,6 +98,8 @@ async def rnv1(bot , u):
 async def rna1(bot , u):
     global AUTH_USERS
     if u.from_user.id in AUTH_USERS:
+        await rna2(bot,u)
+    elif not AUTH_USERS:
         await rna2(bot,u)
     else:
         await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
@@ -106,6 +110,8 @@ async def rnf1(bot , u):
     global AUTH_USERS
     if u.from_user.id in AUTH_USERS:
         await rnf2(bot,u) 
+    elif not AUTH_USERS:
+        await rnf2(bot,u)
     else:
         await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
@@ -114,6 +120,8 @@ async def rnf1(bot , u):
 async def to_video1(bot , u):
     global AUTH_USERS
     if u.from_user.id in AUTH_USERS:
+        await to_video2(bot , u) 
+    elif not AUTH_USERS:
         await to_video2(bot , u) 
     else:
         await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
@@ -124,6 +132,8 @@ async def cinfo1(bot , m):
     global AUTH_USERS
     if m.from_user.id in AUTH_USERS:
         await cinfo2(bot , m)
+    elif not AUTH_USERS:
+        await cinfo2(bot , m)
     else:
         await m.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
@@ -132,6 +142,8 @@ async def cinfo1(bot , m):
 async def leecher1(bot , u):
     global AUTH_USERS
     if u.from_user.id in AUTH_USERS:
+        await leecher2(bot,u)
+    elif not AUTH_USERS:
         await leecher2(bot,u)
     else:
         await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
