@@ -27,6 +27,8 @@ from helpers.media_info import cinfo2
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
+# Array to store users who are authorized to use the bot
+AUTH_USERS = set(int(x) for x in os.environ.get("AUTH_USERS", "").split())
 
 bot = Client(
     "Bot",
@@ -83,26 +85,56 @@ async def help(bot , m):
 
 @bot.on_message(filters.private & filters.command(["rnv"]))
 async def rnv1(bot , u):
-    await rnv2(bot,u)
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await rnv2(bot,u)
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
     
 @bot.on_message(filters.private & filters.command(["rna"]))
 async def rna1(bot , u):
-    await rna2(bot,u)
-    
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await rna2(bot,u)
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
+
 @bot.on_message(filters.private & filters.command(["rnf"]))
 async def rnf1(bot , u):
-    await rnf2(bot,u)    
-    
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await rnf2(bot,u) 
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
+   
 @bot.on_message(filters.private & filters.command(["c2v"]))
 async def to_video1(bot , u):
-    await to_video2(bot , u)
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await to_video2(bot , u) 
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
     
 @bot.on_message(filters.private & (filters.audio | filters.document | filters.video))
 async def cinfo1(bot , m):
-    await cinfo2(bot , m)
-
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await cinfo2(bot , m)
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
+    
 @bot.on_message(filters.private & filters.command(["upload"]))
 async def leecher1(bot , u):
-    await leecher2(bot,u)
-    
+    global AUTH_USERS
+    if u.from_user.id in AUTH_USERS:
+        await leecher2(bot,u)
+    else:
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        return
+
 bot.run()
