@@ -32,7 +32,7 @@
         
             "description": "only these user id's can use the bot. separate with space",
         
-            "value": "742920327 108735187",
+            "value": "",
             
             "required": false
         
