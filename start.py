@@ -89,7 +89,7 @@ async def rnv1(bot , u):
     if u.from_user.id in AUTH_USERS:
         await rnv2(bot,u)
     else:
-        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
     
 @bot.on_message(filters.private & filters.command(["rna"]))
@@ -98,7 +98,7 @@ async def rna1(bot , u):
     if u.from_user.id in AUTH_USERS:
         await rna2(bot,u)
     else:
-        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
 
 @bot.on_message(filters.private & filters.command(["rnf"]))
@@ -107,7 +107,7 @@ async def rnf1(bot , u):
     if u.from_user.id in AUTH_USERS:
         await rnf2(bot,u) 
     else:
-        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
    
 @bot.on_message(filters.private & filters.command(["c2v"]))
@@ -116,7 +116,7 @@ async def to_video1(bot , u):
     if u.from_user.id in AUTH_USERS:
         await to_video2(bot , u) 
     else:
-        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
     
 @bot.on_message(filters.private & (filters.audio | filters.document | filters.video))
@@ -125,7 +125,7 @@ async def cinfo1(bot , m):
     if m.from_user.id in AUTH_USERS:
         await cinfo2(bot , m)
     else:
-        await m.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await m.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
     
 @bot.on_message(filters.private & filters.command(["upload"]))
@@ -134,7 +134,7 @@ async def leecher1(bot , u):
     if u.from_user.id in AUTH_USERS:
         await leecher2(bot,u)
     else:
-        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True)
+        await u.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
         return
 
 bot.run()
