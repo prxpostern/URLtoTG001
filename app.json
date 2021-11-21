@@ -30,9 +30,9 @@
         },
         "AUTH_USERS": {
         
-            "description": "Id of users that can use the bot, from @MissRose_bot by /id command",
+            "description": "only these user id's can use the bot. separate with space",
         
-            "value": "742920327",
+            "value": "742920327 108735187",
             
             "required": false
         
