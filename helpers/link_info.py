@@ -1,7 +1,7 @@
 import requests, os, mimetypes
 from helpers.download_from_url import get_size
 
-async def cinfo2(bot , m):
+async def linfo2(bot , m):
   
   if "|" in m.text:
     url , cfname = m.text.split("|", 1)
