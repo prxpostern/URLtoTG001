@@ -29,6 +29,7 @@ async def linfo2(bot , m):
         r = requests.get(url, allow_redirects=True, stream=True)
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition").split("filename=")[1]
+          mt = mimetypes.guess_type(str(cfname))[0]
         else:
           await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
           return
