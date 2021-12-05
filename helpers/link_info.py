@@ -1,4 +1,4 @@
-import requests, os, mimetypes, re
+import requests, os, mimetypes, json
 from helpers.download_from_url import get_size
 from requests.exceptions import RequestException
 from urllib.parse import unquote
@@ -31,6 +31,7 @@ async def linfo2(bot , m):
     else:
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
+        rr = json.load(r)
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
@@ -48,4 +49,4 @@ async def linfo2(bot , m):
   url_size = get_size(url_size)
 
   #await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram", quote=True)
-  await m.reply_text(text=f"{r}\n\n{r.headers}", quote=True)
+  await m.reply_text(text=f"{rr}", quote=True)
