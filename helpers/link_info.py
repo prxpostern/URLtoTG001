@@ -22,7 +22,7 @@ async def linfo2(bot , m):
           cfname = cfname.split("filename=")[1].split("\"")[1]
           #cfname = unquote(cfname)
         else:
-          cfname = os.path.basename(url)
+          cfname = unquote(os.path.basename(url))
       except RequestException as e:
         await m.reply_text(text=f"Error:\n\n{e}", quote=True)
       
