@@ -24,6 +24,7 @@ async def linfo2(bot , m):
           cfname = cfname.split("filename=")[1]
           if '\"' in cfname:
             cfname = cfname.split("\"")[1]
+          mt = mimetypes.guess_type(str(cfname))[0]
         else:
           await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
           return
