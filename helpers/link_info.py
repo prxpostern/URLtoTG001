@@ -16,7 +16,7 @@ async def linfo2(bot , m):
     if os.path.splitext(url)[1]:
       try:
         r = unquote(requests.get(url, allow_redirects=True, stream=True))
-        r.encoding = 'utf-8'
+        #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
           cfname = cfname.split("filename=")[1].split("\"")[1]
@@ -31,7 +31,7 @@ async def linfo2(bot , m):
     else:
       try:
         r = unquote(requests.get(url, allow_redirects=True, stream=True))
-        r.encoding = 'utf-8'
+        #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
           cfname = cfname.split("filename=")[1].split("\"")[1]
