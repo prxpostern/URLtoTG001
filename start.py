@@ -133,7 +133,7 @@ async def cinfo1(bot , m):
     await cinfo2(bot , m)
 
 
-@trojanz.on_message(filters.private & filters.incoming & filters.text & (filters.regex('^(ht|f)tp*')))
+@bot.on_message(filters.private & filters.incoming & filters.text & (filters.regex('^(ht|f)tp*')))
 async def linfo1(bot , m):
     await linfo2(bot , m)
 
