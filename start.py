@@ -2,18 +2,12 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyromod import listen
 from urllib.parse import quote_plus, unquote
-import math
+import math, os, time, datetime, aiohttp, asyncio, mimetypes, logging
 from helpers.download_from_url import download_file, get_size
 from helpers.file_handler import send_to_transfersh_async, progress
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 from helpers.display_progress import progress_for_pyrogram, humanbytes
-import os
-import time
-import datetime
-import aiohttp
-import asyncio
-import mimetypes
 from helpers.tools import execute
 from helpers.ffprobe import stream_creator
 from helpers.thumbnail_video import thumb_creator
@@ -24,6 +18,13 @@ from helpers.file_renamer import rnf2
 from helpers.vconverter import to_video2
 from helpers.media_info import cinfo2
 from helpers.link_info import linfo2
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+LOGGER = logging.getLogger(__name__)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 API_ID = os.environ.get("API_ID")
