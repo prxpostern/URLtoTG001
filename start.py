@@ -23,6 +23,7 @@ from helpers.audio_renamer import rna2
 from helpers.file_renamer import rnf2
 from helpers.vconverter import to_video2
 from helpers.media_info import cinfo2
+from helpers.link_info import linfo2
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 API_ID = os.environ.get("API_ID")
@@ -129,15 +130,13 @@ async def to_video1(bot , u):
     
 @bot.on_message(filters.private & (filters.audio | filters.document | filters.video))
 async def cinfo1(bot , m):
-    global AUTH_USERS
-    if m.from_user.id in AUTH_USERS:
-        await cinfo2(bot , m)
-    elif not AUTH_USERS:
-        await cinfo2(bot , m)
-    else:
-        await m.reply_text(text=f"sorry ! you cant use this bot.\n\ndeploy your own bot:\n[Repository_Link](https://github.com/prxpostern/URLtoTG001)", quote=True, disable_web_page_preview=True)
-        return
-    
+    await cinfo2(bot , m)
+
+
+@trojanz.on_message(filters.private & filters.incoming & filters.text & (filters.regex('^(ht|f)tp*')))
+async def linfo1(bot , m):
+    await linfo2(bot , m)
+
 @bot.on_message(filters.private & filters.command(["upload"]))
 async def leecher1(bot , u):
     global AUTH_USERS
