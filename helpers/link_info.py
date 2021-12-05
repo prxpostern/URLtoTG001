@@ -29,7 +29,7 @@ async def linfo2(bot , m):
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
         if "Content-Disposition" in r.headers.keys():
-          cfname2 = r.headers.get("Content-Disposition").split("filename=")[1].split("\"")[1]
+          cfname2 = r.headers.get("Content-Disposition")
           cfname = cfname2.split("filename=")[1].split("\"")[1]
           mt = mimetypes.guess_type(str(cfname))[0]
         else:
