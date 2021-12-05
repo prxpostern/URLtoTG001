@@ -55,7 +55,7 @@ async def leecher2(bot , u):
     
     msg = await m.reply_text(text=f"`Analyzing Your Link ...`", quote=True)
 
-    filename = os.path.join(download_path, os.path.basename(url))
+    filename = os.path.join(download_path, cfname)
     filename = filename.replace('%25','_')
     filename = filename.replace(' ','_')
     filename = filename.replace('%40','@')
@@ -91,7 +91,7 @@ async def leecher2(bot , u):
     filename = filename.replace('%25','_')
     filename = filename.replace(' ','_')
     
-    mt = mimetypes.guess_type(str(file_path))[0]
+    mt = mimetypes.guess_type(str(cfname))[0]
     if mt and mt.startswith("video/"):
         fsw = "vid"
     elif mt and mt.startswith("audio/"):
@@ -99,17 +99,8 @@ async def leecher2(bot , u):
     else:
         fsw = "app"
     
-    if "|" in m.text:
-        filename = cfname
-        cfnmt = mimetypes.guess_type(str(cfname))[0]
-        if cfnmt and cfnmt.startswith("video/"):
-            fsw = "vid"
-        elif cfname and cfnmt.startswith("audio/"):
-            fsw = "aud"
-        else:
-            fsw = "app"
-    size_of_file = os.path.getsize(file_path)
-    size = get_size(size_of_file)
+    size = os.path.getsize(file_path)
+    size = get_size(size)
     
     if fsw == "vid":
         try:
