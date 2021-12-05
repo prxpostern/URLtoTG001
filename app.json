@@ -3,39 +3,30 @@
     "description": "Simple Video Uploader",
     "repository": "https://github.com/prxpostern/prxvideoleecher001",
     "success_url": "https://t.me/ali110ali",
-    "stack": "container",
+    #"stack": "container",
+    "stack": "heroku-18",
     "env": {
         "BOT_TOKEN": {
-
-        "description": "Your bot token, as a string.",
-
-        "value": ""
-
+            "description": "Your bot token, as a string.",
+            "value": ""
         },
-
         "API_ID": {
-
-        "description": "Get this value from https://my.telegram.org",
-
-        "value": ""
-
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
         },
-
         "API_HASH": {
-
-        "description": "Get this value from https://my.telegram.org",
-
-        "value": ""
-
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
         },
         "AUTH_USERS": {
-        
             "description": "only these user id's can use the bot. separate with space",
-        
             "value": "",
-            
             "required": false
-        
         }
+    },
+    "buildpacks": [
+    {
+      "url": "heroku/python"
     }
+  ]
 }
