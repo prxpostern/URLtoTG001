@@ -36,7 +36,7 @@ async def linfo2(bot , m):
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           
-          js = json.loads(str(r.headers))
+          js = json.loads(r.headers.decode('utf-8'))
 
           cfname = r.headers.get("Content-Disposition")
           cfname = cfname.split("filename=")[1]
