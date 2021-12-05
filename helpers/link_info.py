@@ -38,8 +38,10 @@ async def linfo2(bot , m):
           #jsfile = "file_date" + str(m.date) + "_id_" + str(m.chat.id) + ".json"
           #js = json.loads(open(jsfile, 'w').write(r.headers.get("Content-Disposition")))
           #cfname = js['']
-          #cfname = r.headers.get("Content-Disposition")
-          #cfname = cfname.split("filename=")[1].split("\"")[1]
+          cfname = r.headers.get("Content-Disposition")
+          cfname = cfname.split("filename=")[1]
+          if '\"' in cfname:
+            cfname = cfname.split("\"")[1]
           #cfname = unquote(cfname)
           #mt = mimetypes.guess_type(str(cfname))[0]
         else:
