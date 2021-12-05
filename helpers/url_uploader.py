@@ -56,7 +56,7 @@ async def leecher2(bot , u):
     start = time.time()
     try:
         file_path = await download_file(url, filename, msg, start, bot)
-        print(f"file downloaded to {file_path} with name: {filename}")
+        print(f"file downloaded to {file_path} .")
     except Exception as e:
         if 'drive.google.com' in url:
             await msg.edit(f"Google Drive Link Detected !\n\n`Downloading ...`\n\n**Please Wait.**")
@@ -98,12 +98,18 @@ async def leecher2(bot , u):
     if fsw == "vid":
         try:
             probe = await stream_creator(file_path)
+            print(f"probe")
             video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+            print(f"video_stream")
             width = int(video_stream['width'] if 'width' in video_stream else 0)
+            print(f"width")
             height = int(video_stream['height'] if 'height' in video_stream else 0)
+            print(f"height")
             duration = int(float(probe["format"]["duration"]))
+            print(f"duration")
             await msg.edit(f"🏞 Generating thumbnail")
             thumbnail = await thumb_creator(file_path)
+            print(f"thumbnail: {thumbnail}")
 
             await msg.edit(f"⬆️ Trying to Upload as Video ...")
             start = time.time()
