@@ -37,10 +37,21 @@ async def leecher2(bot , u):
     else:
         url = m.text.strip()
         if os.path.splitext(url)[1]:
-            ofn = os.path.basename(url)
+            cfname = unquote(os.path.basename(url))
         else:
-            await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
-            return
+            try:
+                r = requests.get(url, allow_redirects=True, stream=True)
+                if "Content-Disposition" in r.headers.keys():
+                    cfname = r.headers.get("Content-Disposition")
+                    cfname = cfname.split("filename=")[1]
+                    if '\"' in cfname:
+                        cfname = cfname.split("\"")[1]
+                else:
+                    await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
+                    return
+            except RequestException as e:
+                await m.reply_text(text=f"Error:\n\n{e}", quote=True)
+                return
     
     msg = await m.reply_text(text=f"`Analyzing Your Link ...`", quote=True)
 
@@ -120,13 +131,13 @@ async def leecher2(bot , u):
                     msg,
                     start
                 ),
-                file_name=filename,
+                file_name=cfname,
                 video=file_path,
                 width=width,
                 height=height,
                 duration=duration,
                 thumb=str(thumbnail),
-                caption=f"`{filename}` [{size}]",
+                caption=f"`{cfname}` [{size}]",
                 reply_to_message_id=m.message_id
             )
             await msg.delete()
@@ -157,10 +168,10 @@ async def leecher2(bot , u):
                     msg,
                     start
                 ),
-                file_name=filename,
+                file_name=cfname,
                 duration=duration,
                 audio=file_path,
-                caption=f"`{filename}` [{size}]",
+                caption=f"`{cfname}` [{size}]",
                 reply_to_message_id=m.message_id
             )
             await msg.delete()
@@ -186,10 +197,10 @@ async def leecher2(bot , u):
                     msg,
                     start
                 ),
-                file_name=filename,
+                file_name=cfname,
                 document=file_path,
                 force_document=True,
-                caption=f"`{filename}` [{size}]",
+                caption=f"`{cfname}` [{size}]",
                 reply_to_message_id=m.message_id
             )
             await msg.delete()
