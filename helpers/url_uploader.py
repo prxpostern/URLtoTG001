@@ -40,7 +40,7 @@ async def leecher2(bot , u):
                     if '\"' in cfname:
                         cfname = cfname.split("\"")[1]
                 else:
-                    await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
+                    await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\n\nSee /help", quote=True)
                     return
             except RequestException as e:
                 await m.reply_text(text=f"Error:\n\n{e}", quote=True)
