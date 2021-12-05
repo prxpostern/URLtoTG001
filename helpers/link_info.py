@@ -45,4 +45,4 @@ async def linfo2(bot , m):
   url_size = get_size(url_size)
 
   await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram", quote=True)
-  await m.reply_text(text=f"{cfname2}", quote=True)
+  #await m.reply_text(text=f"{cfname2}", quote=True)
