@@ -16,7 +16,8 @@ async def linfo2(bot , m):
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
         if "Content-Disposition" in r.headers.keys():
-          cfname = r.headers.get("Content-Disposition").split("filename=")[1].split("\"")[1]
+          cfname2 = r.headers.get("Content-Disposition")
+          cfname = cfname2.split("filename=")[1].split("\"")[1]
         else:
           cfname = os.path.basename(url)
       except RequestException as e:
@@ -28,7 +29,8 @@ async def linfo2(bot , m):
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
         if "Content-Disposition" in r.headers.keys():
-          cfname = r.headers.get("Content-Disposition").split("filename=")[1].split("\"")[1]
+          cfname2 = r.headers.get("Content-Disposition").split("filename=")[1].split("\"")[1]
+          cfname = cfname2.split("filename=")[1].split("\"")[1]
           mt = mimetypes.guess_type(str(cfname))[0]
         else:
           await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
