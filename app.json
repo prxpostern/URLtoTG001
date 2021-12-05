@@ -3,7 +3,7 @@
     "description": "Simple Video Uploader",
     "repository": "https://github.com/prxpostern/prxvideoleecher001",
     "success_url": "https://t.me/ali110ali",
-    "stack": "heroku-20",
+    "stack": "container",
     "env": {
         "BOT_TOKEN": {
             "description": "Your bot token, as a string.",
