@@ -19,8 +19,9 @@ async def linfo2(bot , m):
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
-          cfname = cfname.split("filename=")[1].split("\"")[1]
-          #cfname = unquote(cfname)
+          cfname = cfname.split("filename=")[1]
+          if '\"' in cfname:
+            cfname = cfname.split("\"")[1]
         else:
           cfname = unquote(os.path.basename(url))
       except RequestException as e:
@@ -31,7 +32,7 @@ async def linfo2(bot , m):
     else:
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
-        
+        js = json.loads(r)
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           jsfile = "file_date" + str(m.date) + "_id_" + str(m.chat.id) + ".json"
