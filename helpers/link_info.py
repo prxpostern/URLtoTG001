@@ -15,7 +15,7 @@ async def linfo2(bot , m):
     url = m.text.strip()
     if os.path.splitext(url)[1]:
       try:
-        r = unquote(requests.get(url, allow_redirects=True, stream=True))
+        r = requests.get(url, allow_redirects=True, stream=True)
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
@@ -30,7 +30,7 @@ async def linfo2(bot , m):
       mt = mimetypes.guess_type(str(url))[0]
     else:
       try:
-        r = unquote(requests.get(url, allow_redirects=True, stream=True))
+        r = requests.get(url, allow_redirects=True, stream=True)
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           cfname = r.headers.get("Content-Disposition")
@@ -47,5 +47,5 @@ async def linfo2(bot , m):
   url_size = int(r.headers.get("content-length", 0))
   url_size = get_size(url_size)
 
-  await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram", quote=True)
-  #await m.reply_text(text=f"{cfname2}", quote=True)
+  #await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram", quote=True)
+  await m.reply_text(text=f"{r}\n\n{r.headers}", quote=True)
