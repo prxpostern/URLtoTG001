@@ -39,16 +39,16 @@ async def cinfo2(bot , m):
          pf = str(ft.performer)
       else:
          pf = "No artist(s) Detected!"
-      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: {ft.mime_type}\nTitle: `{tt}`\nArtist: `{pf}`\nSize: {fsize}\n\nUse /rna to rename and edit audio tags.\n\nSee /help.", quote=True)
+      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: `{ft.mime_type}`\nTitle: `{tt}`\nArtist: `{pf}`\nSize: `{fsize}`\n\nUse /rna to rename and edit audio tags.\n\nSee /help.", quote=True)
    elif ft.mime_type and ft.mime_type.startswith("video/"):
       if ft.file_name:
          fn = str(ft.file_name)
       else:
          fn = "No File Name Detected!"
-      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: {ft.mime_type}\nSize: `{fsize}`\n\nUse /c2v to convert or /rnv to rename this video.\n\nSee /help.", quote=True)
+      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: `{ft.mime_type}`\nSize: `{fsize}`\n\nUse /c2v to convert or /rnv to rename this video.\n\nSee /help.", quote=True)
    else:
       if ft.file_name:
          fn = str(ft.file_name)
       else:
          fn = "No File Name Detected!"
-      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: {ft.mime_type}\nSize: `{fsize}`\n\nUse /rnf to rename this file.\n\nSee /help.", quote=True)
+      await m.reply_text(text=f"📋 Media Info:\n\nFile: `{fn}`\nMime-Type: `{ft.mime_type}`\nSize: `{fsize}`\n\nUse /rnf to rename this file.\n\nSee /help.", quote=True)
