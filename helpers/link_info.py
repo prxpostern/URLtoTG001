@@ -16,7 +16,7 @@ async def linfo2(bot , m):
       try:
         r = requests.get(url, allow_redirects=True, stream=True)
         if "Content-Disposition" in r.headers.keys():
-          cfname = r.headers.get("Content-Disposition").split("filename=")[1]
+          cfname = r.headers.get("Content-Disposition").split("filename=")[1].split("\"")[1]
         else:
           cfname = os.path.basename(url)
       except RequestException as e:
