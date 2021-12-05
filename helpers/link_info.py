@@ -15,10 +15,10 @@ async def linfo2(bot , m):
     url = m.text.strip()
     if os.path.splitext(url)[1]:
       try:
-        r = requests.get(url, allow_redirects=True, stream=True)
+        r = unquote(requests.get(url, allow_redirects=True, stream=True))
         r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
-          cfname = unquote(r.headers.get("Content-Disposition"))
+          cfname = r.headers.get("Content-Disposition")
           cfname = cfname.split("filename=")[1].split("\"")[1]
           #cfname = unquote(cfname)
         else:
@@ -30,10 +30,10 @@ async def linfo2(bot , m):
       mt = mimetypes.guess_type(str(url))[0]
     else:
       try:
-        r = requests.get(url, allow_redirects=True, stream=True)
+        r = unquote(requests.get(url, allow_redirects=True, stream=True))
         r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
-          cfname = unquote(r.headers.get("Content-Disposition"))
+          cfname = r.headers.get("Content-Disposition")
           cfname = cfname.split("filename=")[1].split("\"")[1]
           #cfname = unquote(cfname)
           mt = mimetypes.guess_type(str(cfname))[0]
