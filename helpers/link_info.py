@@ -26,7 +26,7 @@ async def linfo2(bot , m):
             cfname = cfname.split("\"")[1]
           mt = mimetypes.guess_type(str(cfname))[0]
         else:
-          await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
+          await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\n\nSee /help", quote=True)
           return
       except RequestException as e:
         await m.reply_text(text=f"Error:\n\n{e}", quote=True)
@@ -36,4 +36,4 @@ async def linfo2(bot , m):
   url_size = int(r.headers.get("content-length", 0))
   url_size = get_size(url_size)
 
-  await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram", quote=True)
+  await m.reply_text(text=f"📋 Link Info:\n\nFile: `{cfname}`\nMime-Type: `{mt}`\nSize: `{url_size}`\n\nUse /upload as reply to your link, it will upload your link to telegram.\n\nSee /help.", quote=True)
