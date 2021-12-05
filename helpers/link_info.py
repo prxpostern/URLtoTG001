@@ -1,5 +1,6 @@
-import requests, os, mimetypes
+import requests, os, mimetypes, re
 from helpers.download_from_url import get_size
+from requests.exceptions import RequestException
 
 async def linfo2(bot , m):
   
@@ -12,7 +13,16 @@ async def linfo2(bot , m):
   else:
     url = m.text.strip()
     if os.path.splitext(url)[1]:
-      cfname = os.path.basename(url)
+      try:
+        r = requests.get(url, allow_redirects=True, stream=True)
+        if "Content-Disposition" in r.headers.keys():
+          cfname = r.headers.get("Content-Disposition").split("filename=")[1]
+        else:
+          cfname = os.path.basename(url)
+      except RequestException as e:
+        await m.reply_text(text=f"Error:\n\n{e}", quote=True)
+      
+      #fname = re.findall("filename=(.+)", r.headers["Content-Disposition"])[0]
       mt = mimetypes.guess_type(str(url))[0]
     else:
       await m.reply_text(text=f"I Could not Determine The FileType !\nPlease Use Custom Filename With Extension\nSee /help", quote=True)
