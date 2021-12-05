@@ -35,9 +35,7 @@ async def linfo2(bot , m):
         #r.encoding = 'utf-8'
         if "Content-Disposition" in r.headers.keys():
           jsfile = "file_date" + str(m.date) + "_id_" + str(m.chat.id) + ".json"
-          jsfile = open(jsfile, 'w').write(r.headers.get("Content-Disposition"))
-          #jsfile.close()
-          js = json.loads(jsfile)
+          js = json.loads(open(jsfile, 'w').write(r.headers.get("Content-Disposition")))
           #cfname = js['']
           #cfname = r.headers.get("Content-Disposition")
           #cfname = cfname.split("filename=")[1].split("\"")[1]
