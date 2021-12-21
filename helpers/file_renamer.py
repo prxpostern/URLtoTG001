@@ -44,7 +44,7 @@ async def rnf2(bot , u):
   fsize = get_size(ft.file_size)
   
   if not "|" in u.text:
-    await m.reply_text(text=f"Please Type New Filename with extension !\n\nExample:\n**/rnf | filename.ext**", quote=True)
+    await m.reply_text(text=f"Please Type New Filename with extension !\n\nExample:\n**/rnf | filename.ext**\n\nsee /help.", quote=True)
     return
   else:
     args = u.text.split("|")
@@ -52,7 +52,7 @@ async def rnf2(bot , u):
       cmd , newname = u.text.split("|", 1)
       newname = newname.strip()
       if not os.path.splitext(newname)[1]:
-        await m.reply_text(text=f"Type Extension !\n\nExample:\n**/rnf | filename.ext**", quote=True)
+        await m.reply_text(text=f"Type Extension !\n\nExample:\n**/rnf | filename.ext\n\nsee /help.**", quote=True)
         return
       else:
         tnow = str(datetime.datetime.now())
