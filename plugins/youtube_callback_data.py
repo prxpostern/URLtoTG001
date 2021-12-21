@@ -119,15 +119,15 @@ async def catch_youtube_dldata(_, q):
         for le_file in totlaa_sleif:
             # recursion
             if os.path.splitext(cfname)[1] in video_types:
-                uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                uvstatus = await upvideo(_, qr, qq, os.path.join(splitted_dir, le_file))
                 if uvstatus:
-                    uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                    uvstatus = await upvideo(_, qr, qq, os.path.join(splitted_dir, le_file))
             elif os.path.splitext(cfname)[1] in audio_types:
-                uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                uastatus = await upaudio(_, qr, qq, os.path.join(splitted_dir, le_file))
                 if uastatus:
-                    uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                    uastatus = await upaudio(_, qr, qq, os.path.join(splitted_dir, le_file))
             else:
-                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                ufstatus = await upfile(_, qr, qq, os.path.join(splitted_dir, le_file))
                 if ufstatus:
-                    ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                    ufstatus = await upfile(_, qr, qq, os.path.join(splitted_dir, le_file))
         await qq.delete()
