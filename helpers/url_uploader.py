@@ -122,8 +122,11 @@ async def leecher2(bot , u):
             else:
                 return
         else:
-            await upfile(bot, m, msg, file_path, cfname)
-            return
+            ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+            if ufstatus:
+                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+            else:
+                return    
     else:
         # Split Large Files
         logger.info(f"Large File. Size: {size} ! --- Spliting")
