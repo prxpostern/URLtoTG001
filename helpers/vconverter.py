@@ -105,7 +105,7 @@ async def to_video2(bot , u):
 
     probe = json.loads(probe2[0])
     #probe = await stream_creator(file_path)
-    logger.info(probe)
+    #logger.info(probe)
     
     duration = int(float(probe["format"]["duration"]))
 
