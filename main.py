@@ -25,6 +25,8 @@ class Config:
     CUSTOM_THUMB = None
     EDIT_TIME = 3
     DOWNLOAD_DIRECTORY = "Downloads/"
+    SP_LIT_ALGO_RITH_M= "hjs"
+    MAX_TG_SPLIT_FILE_SIZE = 1.9 * 1024 * 1024
     
     
 if __name__ == "__main__":
