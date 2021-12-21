@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 async def rnf2(bot , u):
   
   if not u.reply_to_message:
-    await u.reply_text(text=f"Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**", quote=True)
+    await u.reply_text(text=f"Please Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**", quote=True)
     return
   
   m = u.reply_to_message
