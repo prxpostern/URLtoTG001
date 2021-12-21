@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 HELP_TXT = """
 A Simple Telegram Bot to 
-Upload Files From **Direct** and **Google Drive** Links,
+Upload Files From **Direct** and **Google Drive** and **Youtube** Links,
 Convert Document Media to Video,
 and Rename Audio/Video/Document Files.
 
