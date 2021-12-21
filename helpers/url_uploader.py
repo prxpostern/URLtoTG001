@@ -120,3 +120,34 @@ async def leecher2(bot , u):
         else:
             await upfile(bot, m, msg, file_path, cfname)
             return
+    else:
+        # Split Large Files
+        logger.info("Large File ! --- Spliting")
+        d_f_s = humanbytes(os.path.getsize(file_path))
+        await msg.edit_text(
+            "Telegram does not support uploading this file.\n"
+            f"Detected File Size: {d_f_s} 😡\n"
+            "\n🤖 trying to split the files 🌝🌝🌚"
+        )
+        splitted_dir = await split_large_files(file_path)
+        totlaa_sleif = os.listdir(splitted_dir)
+        totlaa_sleif.sort()
+        number_of_files = len(totlaa_sleif)
+        logger.info(totlaa_sleif)
+        ba_se_file_name = os.path.basename(file_path)
+        await msg.edit_text(
+            f"Detected File Size: {d_f_s} 😡\n"
+            f"<code>{ba_se_file_name}</code> splitted into {number_of_files} files.\n"
+            "Trying to upload to Telegram, now ..."
+        )
+        for le_file in totlaa_sleif:
+            # recursion: will this FAIL somewhere?
+            await upload_to_tg(
+                m,
+                os.path.join(splitted_dir, le_file),
+                from_user,
+                dict_contatining_uploaded_files,
+                client,
+                edit_media,
+                yt_thumb,
+            )
