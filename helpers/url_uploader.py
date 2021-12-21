@@ -148,14 +148,12 @@ async def leecher2(bot , u):
                 uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 if uvstatus:
                     uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
-                else:
-                    return
             elif os.path.splitext(cfname)[1] in audio_types:
                 uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 if uastatus:
                     uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
-                else:
-                    return
             else:
-                await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
-                return
+                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                if ufstatus:
+                    ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                
