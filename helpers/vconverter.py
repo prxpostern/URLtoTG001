@@ -1,10 +1,10 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from urllib.parse import quote_plus, unquote
-from helpers.download_from_url import download_file, get_size
-from helpers.file_handler import send_to_transfersh_async, progress
-from hachoir.parser import createParser
-from hachoir.metadata import extractMetadata
+#from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+#from urllib.parse import quote_plus, unquote
+from helpers.download_from_url import get_size
+#from helpers.file_handler import send_to_transfersh_async, progress
+#from hachoir.parser import createParser
+#from hachoir.metadata import extractMetadata
 from helpers.display_progress import progress_for_pyrogram, humanbytes
 import os, json, time, datetime, aiohttp, asyncio, mimetypes, math, logging
 from helpers.tools import execute, clean_up
@@ -45,6 +45,8 @@ async def to_video2(bot , u):
         fn = os.path.splitext(fullname)[0]
         if ft.mime_type.startswith("video/"):
             status = True
+            logger.info(f"status: {status}")
+            
             mes2 = await m.reply_text(
                 text=f"⬇️ Trying To Download Video ...",
                 quote=True
@@ -63,19 +65,22 @@ async def to_video2(bot , u):
             await mes2.edit(f"🌄 Generating thumbnail ...")
             probe2 = await execute(f"ffprobe -v quiet -hide_banner -show_format -show_streams -print_format json '{file_path}'")
             if not probe2:
+                status = False
+                logger.info(f"status: {status}")
                 await clean_up(file_path)
+                logger.info(f"Deleted: {file_path}")
                 await mes2.edit_text("Some Error Occured while Fetching Details...")
                 return
 
             probe = json.loads(probe2[0])
             #probe = await stream_creator(file_path)
             duration = int(float(probe["format"]["duration"]))
-            logger.info(duration)
+
             video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
             width = int(video_stream['width'] if 'width' in video_stream else 0)
-            logger.info(width)
+
             height = int(video_stream['height'] if 'height' in video_stream else 0)
-            logger.info(height)
+
             thumbnail = await thumb_creator(file_path)
             fnext = fn + ".mp4"
             await mes2.edit(f"⬆️ Trying to Upload as Video ...")
@@ -99,18 +104,16 @@ async def to_video2(bot , u):
                     )
                 )
                 status = False
+                logger.info(f"status: {status}")
                 await mes2.delete()
-                try:
-                    os.remove(file_path)
-                except:
-                    pass
+                await clean_up(file_path)
+                logger.info(f"Deleted: {file_path}")
             except Exception as e:
                 status = False
+                logger.info(f"status: {status}")
                 await mes2.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
-                try:
-                    os.remove(file_path)
-                except:
-                    pass
+                await clean_up(file_path)
+                logger.info(f"Deleted: {file_path}")
         else:
             await m.reply_text(text=f"Wrong File Type !\n\nSee /help", quote=True)
             return
