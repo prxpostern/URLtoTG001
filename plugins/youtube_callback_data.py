@@ -76,6 +76,7 @@ async def catch_youtube_dldata(_, q):
         if uvstatus:
             uvstatus = await upvideo(_, qr, qq, file_name, cfname)
         else:
+            await msg.delete()
             return
     elif mt and mt.startswith("audio/"):
         uastatus = await upaudio(_, qr, qq, file_name, cfname)
