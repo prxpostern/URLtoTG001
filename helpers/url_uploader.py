@@ -122,11 +122,10 @@ async def leecher2(bot , u):
             return
     else:
         # Split Large Files
-        logger.info("Large File ! --- Spliting")
-        d_f_s = humanbytes(os.path.getsize(file_path))
+        logger.info(f"Large File. Size: {size} ! --- Spliting")
         await msg.edit_text(
             "Telegram does not support uploading this file.\n"
-            f"Detected File Size: {d_f_s} 😡\n"
+            f"Detected File Size: {size} 😡\n"
             "\n🤖 trying to split the files 🌝🌝🌚"
         )
         splitted_dir = await split_large_files(file_path)
@@ -134,20 +133,31 @@ async def leecher2(bot , u):
         totlaa_sleif.sort()
         number_of_files = len(totlaa_sleif)
         logger.info(totlaa_sleif)
-        ba_se_file_name = os.path.basename(file_path)
         await msg.edit_text(
             f"Detected File Size: {d_f_s} 😡\n"
-            f"<code>{ba_se_file_name}</code> splitted into {number_of_files} files.\n"
+            f"<code>{filename}</code> splitted into {number_of_files} files.\n"
             "Trying to upload to Telegram, now ..."
         )
         for le_file in totlaa_sleif:
             # recursion: will this FAIL somewhere?
-            await upload_to_tg(
-                m,
-                os.path.join(splitted_dir, le_file),
-                from_user,
-                dict_contatining_uploaded_files,
-                client,
-                edit_media,
-                yt_thumb,
-            )
+            if mt and mt.startswith("video/"):
+                uvstatus = await upvideo(bot, m, msg, file_path, cfname)
+                if uvstatus:
+                    uvstatus = await upvideo(bot, m, msg, file_path, cfname)
+                else:
+                    return
+            elif mt and mt.startswith("audio/"):
+                uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                if uastatus:
+                    uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                else:
+                    return
+            elif os.path.splitext(cfname)[1] in audio_types:
+                uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                if uastatus:
+                    uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                else:
+                    return
+            else:
+                await upfile(bot, m, msg, file_path, cfname)
+                return
