@@ -31,8 +31,8 @@ async def rnv2(bot , u):
     
     m = u.reply_to_message
     
-    if m.audio or m.document:
-        ft = m.document or m.audio
+    if m.video or m.document:
+        ft = m.document or m.video
         fsize = get_size(ft.file_size)
     else:
         await m.reply_text(text=f"Please Reply To Viedo !\n\nSee /help", quote=True)
