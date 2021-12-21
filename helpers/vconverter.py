@@ -73,7 +73,6 @@ async def to_video2(bot , u):
 
     print("oldname = ", oldname)
     fn = os.path.splitext(oldname)[0]
-    if ft.mime_type.startswith("video/"):
     
     #################################################################### Downloading Video
     status = True
