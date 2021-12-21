@@ -103,6 +103,7 @@ async def rnf2(bot , u):
             chat_id=m.chat.id,
             file_name=newname,
             document=file_path,
+            force_document=True,
             caption=f"`{newname}` [{fsize}]",
             reply_to_message_id=m.message_id,
             progress=progress_for_pyrogram,
