@@ -41,7 +41,8 @@ async def split_large_files(input_file):
         # END: proprietary
         start_time = 0
         end_time = minimum_duration
-        base_name = os.path.basename(input_file)
+        #base_name = os.path.basename(input_file)
+        base_name = os.path.splitext(input_file)[0]
         input_extension = base_name.split(".")[-1]
         logger.info(input_extension)
 
@@ -51,7 +52,7 @@ async def split_large_files(input_file):
         while end_time <= total_duration:
             logger.info(i)
             # file name generate
-            parted_file_name = "{}_PART_{}.{}".format(
+            parted_file_name = "{}.{}.{}".format(
                 str(base_name), str(i).zfill(5), str(input_extension)
             )
 
