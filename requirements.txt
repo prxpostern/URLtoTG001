@@ -1,0 +1,11 @@
+pyrogram
+tgcrypto
+aiohttp
+requests
+asyncio
+hachoir
+pyromod
+Pillow
+ffmpeg
+gdown
+yt_dlp
