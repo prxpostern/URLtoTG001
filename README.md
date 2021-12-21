@@ -15,7 +15,7 @@ A Simple Telegram Bot to Upload Files From **Direct Links** and **Google Drive L
 
 👉 /rnf : Rename All Files.
 
-- Supporting Large File Upload (with Spliting)
+- Large File Upload Supported (with Spliting)
 
 #### LICENSE
 - GPLv3
