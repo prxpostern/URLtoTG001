@@ -1,17 +1,18 @@
 import math, requests, os, time, datetime, aiohttp, asyncio, mimetypes, gdown, logging
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+#from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from helpers.tgupload import upvideo, upaudio, upfile
-from urllib.parse import quote_plus, unquote
+#from urllib.parse import quote_plus, unquote
 from helpers.download_from_url import download_file, get_size
-from helpers.file_handler import send_to_transfersh_async, progress
-from hachoir.parser import createParser
-from hachoir.metadata import extractMetadata
+#from helpers.file_handler import send_to_transfersh_async, progress
+#from hachoir.parser import createParser
+#from hachoir.metadata import extractMetadata
 from helpers.display_progress import progress_for_pyrogram, humanbytes
 from helpers.tools import execute
 from helpers.ffprobe import stream_creator
 from helpers.thumbnail_video import thumb_creator
 from helpers.youtube import ytdl
+from helpers.file_spliter import split_large_files
 
 logger = logging.getLogger(__name__)
 download_path = "Downloads/"
