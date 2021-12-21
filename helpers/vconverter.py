@@ -72,7 +72,7 @@ async def to_video2(bot , u):
         oldname = oldname.replace(' ','_')
 
     print("oldname = ", oldname)
-    fn = os.path.splitext(fullname)[0]
+    fn = os.path.splitext(oldname)[0]
     if ft.mime_type.startswith("video/"):
     
     #################################################################### Downloading Video
@@ -84,7 +84,7 @@ async def to_video2(bot , u):
     c_time = time.time()
     file_path = await bot.download_media(
         m,
-        file_name=tempname,
+        file_name=oldname,
         progress=progress_for_pyrogram,
         progress_args=(
             "⬇️ Downloading Video:",
