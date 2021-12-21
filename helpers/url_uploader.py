@@ -114,6 +114,7 @@ async def leecher2(bot , u):
             if uvstatus:
                 uvstatus = await upvideo(bot, m, msg, file_path, cfname)
             else:
+                await msg.delete()
                 return
         elif os.path.splitext(cfname)[1] in audio_types:
             uastatus = await upaudio(bot, m, msg, file_path, cfname)
@@ -126,6 +127,7 @@ async def leecher2(bot , u):
             if ufstatus:
                 ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
             else:
+                await msg.delete()
                 return    
     else:
         # Split Large Files
