@@ -147,16 +147,17 @@ async def leecher2(bot , u):
         )
         for le_file in totlaa_sleif:
             # recursion
+            #cfname = os.path.basename(le_file)
             if os.path.splitext(cfname)[1] in video_types:
-                uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
                 if uvstatus:
-                    uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                    uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
             elif os.path.splitext(cfname)[1] in audio_types:
-                uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
                 if uastatus:
-                    uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                    uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
             else:
-                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
                 if ufstatus:
-                    ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                    ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
                 
