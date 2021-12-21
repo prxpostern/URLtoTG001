@@ -24,6 +24,11 @@ async def rnf2(bot , u):
     await u.reply_text(text=f"Please Reply To Your Document !\n\nExample:\n**/rnf | filename.ext**\n\nsee /help.", quote=True)
     return
   
+  logger.info(f"status: {status}")
+  if status:
+    await u.reply_text(text=f"wait until last process finish. status: {status}", quote=True)
+    return
+  
   m = u.reply_to_message
   
   if m.video:
