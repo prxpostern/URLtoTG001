@@ -166,7 +166,8 @@ async def upfile(client, message, msg, file_loc, fname=None):
         await msg.edit(f"❌ Uploading as Document Failed !\n\n**Error:** {e}")
         print(e)     
         logger.info(f"Some Error Occurred.\n\n{e}")
+        return True
         
     await msg.delete()
     await clean_up(file_loc)
-    return    
+    return False
