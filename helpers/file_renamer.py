@@ -114,6 +114,8 @@ async def rnf2(bot , u):
           logger.info(f"Deleted: {file_path}")
         except Exception as e:
           await msg.edit(f"❌ Uploading as Document Failed **Error:**\n\n{e}")
+          status = False
+          logger.info(f"status: {status}")
           await clean_up(file_path)
           logger.info(f"Deleted: {file_path}")
     else:
