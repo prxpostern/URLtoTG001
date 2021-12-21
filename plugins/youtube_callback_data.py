@@ -1,16 +1,17 @@
 import asyncio, logging, os, re, shutil, mimetypes, time
-
+from pathlib import Path
 from pyrogram import Client, filters
 from pyrogram.types import (
     InputMediaAudio,
     InputMediaVideo,
 )
-
+from helpers.download_from_url import get_size
 #from ytdlbot import Config
 from main import Config
 from helpers.util import media_duration, width_and_height
 from helpers.ytdlfunc import yt_download
 from helpers.tgupload import upaudio, upvideo
+from helpers.file_spliter import split_large_files
 
 logger = logging.getLogger(__name__)
 ytdata = re.compile(r"^(Video|Audio)_(\d{1,3})_(empty|none)_([\w\-]+)$")
@@ -66,23 +67,67 @@ async def catch_youtube_dldata(_, q):
         cfname = qt.split("|", 1)[1]
         cfname = cfname.strip()
         cfname = cfname.replace('%40','@')
+        cfname = os.path.join(userdir, cfname)
+        Path(file_name).rename(cfname)
+    else:
+        cfname = file_name    
 
     await q.edit_message_caption(f"download finished .")
     
-    time.sleep(3)
-    mt = mimetypes.guess_type(str(file_name))[0]
-    if mt and mt.startswith("video/"):
-        uvstatus = await upvideo(_, qr, qq, file_name, cfname)
-        if uvstatus:
-            uvstatus = await upvideo(_, qr, qq, file_name, cfname)
-        else:
-            await qq.delete()
-            return
-    elif mt and mt.startswith("audio/"):
-        uastatus = await upaudio(_, qr, qq, file_name, cfname)
-        if uastatus:
-            uastatus = await upaudio(_, qr, qq, file_name, cfname)
-        else:
-            return
+    #time.sleep(3)
+    mt = mimetypes.guess_type(str(cfname))[0]
+    
+    if os.path.getsize(cfname) < Config.TG_MAX_FILE_SIZE:
+        if mt and mt.startswith("video/"):
+            uvstatus = await upvideo(_, qr, qq, cfname)
+            if uvstatus:
+                uvstatus = await upvideo(_, qr, qq, cfname)
+            else:
+                await qq.delete()
+                return
+        elif mt and mt.startswith("audio/"):
+            uastatus = await upaudio(_, qr, qq, cfname)
+            if uastatus:
+                uastatus = await upaudio(_, qr, qq, cfname)
+            else:
+                await qq.delete()
+                return
     else:
-        logger.info("CB_Upload_Error")
+        # Split Large Files
+        size = os.path.getsize(cfname)
+        size = get_size(size)
+        filename = os.path.basename(cfname)
+        filename = filename.replace('%40','@')
+        filename = filename.replace('%25','_')
+        filename = filename.replace(' ','_')
+        logger.info(f"Large File. Size: {size} ! --- Spliting")
+        await q.edit_message_caption(
+            "Telegram does not support uploading this file.\n"
+            f"Detected File Size: {size} 😡\n"
+            "\n🤖 trying to split the files 🌝🌝🌚"
+        )
+        splitted_dir = await split_large_files(cfname)
+        totlaa_sleif = os.listdir(splitted_dir)
+        totlaa_sleif.sort()
+        number_of_files = len(totlaa_sleif)
+        logger.info(totlaa_sleif)
+        await q.edit_message_caption(
+            f"Detected File Size: {size} 😡\n"
+            f"<code>{filename}</code> splitted into {number_of_files} files.\n"
+            "Trying to upload to Telegram, now ..."
+        )
+        for le_file in totlaa_sleif:
+            # recursion
+            if os.path.splitext(cfname)[1] in video_types:
+                uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                if uvstatus:
+                    uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+            elif os.path.splitext(cfname)[1] in audio_types:
+                uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                if uastatus:
+                    uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+            else:
+                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+                if ufstatus:
+                    ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), le_file)
+        await qq.delete()
