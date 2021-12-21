@@ -141,7 +141,7 @@ async def leecher2(bot , u):
         number_of_files = len(totlaa_sleif)
         logger.info(totlaa_sleif)
         await msg.edit_text(
-            f"Detected File Size: {d_f_s} 😡\n"
+            f"Detected File Size: {size} 😡\n"
             f"<code>{filename}</code> splitted into {number_of_files} files.\n"
             "Trying to upload to Telegram, now ..."
         )
