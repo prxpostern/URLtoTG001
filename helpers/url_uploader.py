@@ -143,19 +143,19 @@ async def leecher2(bot , u):
             "Trying to upload to Telegram, now ..."
         )
         for le_file in totlaa_sleif:
-            # recursion: will this FAIL somewhere?
+            # recursion
             if os.path.splitext(cfname)[1] in video_types:
-                uvstatus = await upvideo(bot, m, msg, file_path, cfname)
+                uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 if uvstatus:
-                    uvstatus = await upvideo(bot, m, msg, file_path, cfname)
+                    uvstatus = await upvideo(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 else:
                     return
             elif os.path.splitext(cfname)[1] in audio_types:
-                uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 if uastatus:
-                    uastatus = await upaudio(bot, m, msg, file_path, cfname)
+                    uastatus = await upaudio(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 else:
                     return
             else:
-                await upfile(bot, m, msg, file_path, cfname)
+                await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
                 return
