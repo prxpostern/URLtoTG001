@@ -21,7 +21,7 @@ async def rna2(bot , u):
   file_path = None
   
   if not u.reply_to_message:
-    await u.reply_text(text=f"Please Reply To Audio Files !\n\nExample:\n**/rna | filename**\n\nsee /help.", quote=True)
+    await u.reply_text(text=f"Please Reply To Your Audio !\n\nExample:\n**/rna | filename**\n\nsee /help.", quote=True)
     return
   
   logger.info(f"status: {status}")
