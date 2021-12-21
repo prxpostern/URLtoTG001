@@ -1,7 +1,7 @@
 ## URLtoTG001 (Bot)
 ---
 
-A Simple Telegram Bot to Upload Files From **Direct Links** and **Google Drive Link** and **Youtube**, Convert Document media to Video, and Rename Audio/Video/Document Files.
+A Simple Telegram Bot to Upload Files From **Direct Links** and **Google Drive Links** and **Youtube Links**, Convert Document media to Video, and Rename Audio/Video/Document Files.
 
 **Features**:
 
