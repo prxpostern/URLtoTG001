@@ -132,7 +132,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
         await msg.edit_text(f"Some Error Occurred.\n\n{e}")
         return True
 
-    await msg.delete()
+    #await msg.delete()
     await clean_up(file_loc)
     return False
 
@@ -168,6 +168,6 @@ async def upfile(client, message, msg, file_loc, fname=None):
         logger.info(f"Some Error Occurred.\n\n{e}")
         return True
         
-    await msg.delete()
+    #await msg.delete()
     await clean_up(file_loc)
     return False
