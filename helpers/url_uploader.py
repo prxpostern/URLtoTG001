@@ -98,32 +98,25 @@ async def leecher2(bot , u):
     audio_types = ['.aac', '.m4a', '.mp3', '.wma', '.mka', '.wav', '.oga', '.ogg', '.ra', '.flac', '.amr', '.opus', '.alac', '.aiff']
     mt = mimetypes.guess_type(str(cfname))[0]
     
-    if os.path.getsize(file_path) < TG_MAX_FILE_SIZE:
+    if os.path.getsize(file_path) < Config.TG_MAX_FILE_SIZE:
         if mt and mt.startswith("video/"):
             uvstatus = await upvideo(bot, m, msg, file_path, cfname)
             if uvstatus:
                 uvstatus = await upvideo(bot, m, msg, file_path, cfname)
-                
             else:
                 return
         elif mt and mt.startswith("audio/"):
             uastatus = await upaudio(bot, m, msg, file_path, cfname)
             if uastatus:
                 uastatus = await upaudio(bot, m, msg, file_path, cfname)
-                
             else:
                 return
         elif os.path.splitext(cfname)[1] in audio_types:
             uastatus = await upaudio(bot, m, msg, file_path, cfname)
             if uastatus:
                 uastatus = await upaudio(bot, m, msg, file_path, cfname)
-                
             else:
                 return
         else:
             await upfile(bot, m, msg, file_path, cfname)
             return
-    
-
-        
-    
