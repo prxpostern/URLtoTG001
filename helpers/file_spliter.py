@@ -9,7 +9,8 @@ import time
 
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
-#from tobrot import logger, MAX_TG_SPLIT_FILE_SIZE, SP_LIT_ALGO_RITH_M
+#from tobrot import MAX_TG_SPLIT_FILE_SIZE, SP_LIT_ALGO_RITH_M
+from main import Config
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +33,7 @@ async def split_large_files(input_file):
         logger.info(total_duration)
         total_file_size = os.path.getsize(input_file)
         logger.info(total_file_size)
-        minimum_duration = (total_duration / total_file_size) * (MAX_TG_SPLIT_FILE_SIZE)
+        minimum_duration = (total_duration / total_file_size) * (Config.MAX_TG_SPLIT_FILE_SIZE)
         # casting to int cuz float Time Stamp can cause errors
         minimum_duration = int(minimum_duration)
 
@@ -74,7 +75,7 @@ async def split_large_files(input_file):
             elif flag:
                 break
 
-    elif SP_LIT_ALGO_RITH_M.lower() == "hjs":
+    elif Config.SP_LIT_ALGO_RITH_M.lower() == "hjs":
         # handle normal files here
         o_d_t = os.path.join(new_working_directory, os.path.basename(input_file))
         o_d_t = o_d_t + "."
@@ -82,13 +83,13 @@ async def split_large_files(input_file):
             "split",
             "--numeric-suffixes=1",
             "--suffix-length=5",
-            f"--bytes={MAX_TG_SPLIT_FILE_SIZE}",
+            f"--bytes={Config.MAX_TG_SPLIT_FILE_SIZE}",
             input_file,
             o_d_t,
         ]
         await run_comman_d(file_genertor_command)
 
-    elif SP_LIT_ALGO_RITH_M.lower() == "rar":
+    elif Config.SP_LIT_ALGO_RITH_M.lower() == "rar":
         o_d_t = os.path.join(
             new_working_directory,
             os.path.basename(input_file),
@@ -97,7 +98,7 @@ async def split_large_files(input_file):
         file_genertor_command = [
             "rar",
             "a",
-            f"-v{MAX_TG_SPLIT_FILE_SIZE}b",
+            f"-v{Config.MAX_TG_SPLIT_FILE_SIZE}b",
             "-m0",
             o_d_t,
             input_file,
