@@ -57,6 +57,7 @@ async def thumb_creator(filepath):
     LOGGER.debug('Thumbnail : ' + out_file)
     return out_file
 
+######################################################################
 async def set(filepath):
     if not os_path.exists(filepath):
         LOGGER.error('File not found : ' + filepath)
