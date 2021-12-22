@@ -61,7 +61,7 @@ async def upaudio(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                "⬆️ Uploading as Audio:",
+                f"⬆️ Uploading as Audio:\n\n`{fn}`\n",
                 msg,
                 c_time
             )
@@ -121,7 +121,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                "⬆️ Uploading as Video:",
+                f"⬆️ Uploading as Video:\n\n`{fn}`\n",
                 msg,
                 c_time
             )
