@@ -157,7 +157,7 @@ async def upfile(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                "⬆️ Uploading as Document:",
+                f"⬆️ Uploading as Document:\n\n`{fn}`\n",
                 msg,
                 c_time
             )
