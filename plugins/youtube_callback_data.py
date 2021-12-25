@@ -12,6 +12,7 @@ from helpers.util import media_duration, width_and_height
 from helpers.ytdlfunc import yt_download
 from helpers.tgupload import upaudio, upvideo
 from helpers.file_spliter import split_large_files
+from helpers.tools import execute, clean_up
 
 logger = logging.getLogger(__name__)
 ytdata = re.compile(r"^(Video|Audio)_(\d{1,3})_(empty|none)_([\w\-]+)$")
@@ -133,3 +134,4 @@ async def catch_youtube_dldata(_, q):
                 logger.info(f"no audio-video file!")
                 return
         await qq.delete()
+        await clean_up(cfname)

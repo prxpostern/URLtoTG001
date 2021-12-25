@@ -76,12 +76,11 @@ async def download_coroutine(session, url, file_name, event, start, bot):
                     try:
                         if total_length < downloaded:
                             total_length = downloaded
-                        current_message = """Downloading : {}%
-URL: {}
-File Name: {}
-File Size: {}
+                        current_message = """<b>Status</b> : {}%
+Filename: {}
+Size: {}
 Downloaded: {}
-ETA: {}""".format("%.2f" % (percentage), url, file_name.split("/")[-1], humanbytes(total_length), humanbytes(downloaded), time_formatter(estimated_total_time))
+""".format("%.2f" % (percentage), file_name.split("/")[-1], humanbytes(total_length), humanbytes(downloaded))
                         if (
                             current_message != display_message
                             and current_message != "empty"

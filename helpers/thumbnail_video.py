@@ -19,6 +19,11 @@ async def thumb_creator(filepath):
 
     probe = await stream_creator(filepath)
     video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
+    dur = int(float(probe["format"]["duration"]))
+    if video_stream and video_stream['width']:
+        wid = int(video_stream['width'] if 'width' in video_stream else 0)
+    if video_stream and video_stream['height']:
+        hei = int(video_stream['height'] if 'height' in video_stream else 0)
 
     try:
         duration = float(video_stream["duration"]) // 2
@@ -55,7 +60,7 @@ async def thumb_creator(filepath):
         return False
 
     LOGGER.debug('Thumbnail : ' + out_file)
-    return out_file
+    return out_file, dur, wid, hei
 
 ######################################################################
 async def set(filepath):

@@ -1,9 +1,9 @@
 import time, os, logging
-from hachoir.parser import createParser
-from hachoir.metadata import extractMetadata
+#from hachoir.parser import createParser
+#from hachoir.metadata import extractMetadata
 from helpers.download_from_url import get_size
 from helpers.tools import clean_up
-from helpers.progress import progress_func
+#from helpers.progress import progress_func
 from helpers.display_progress import progress_for_pyrogram
 from helpers.thumbnail_video import thumb_creator
 from helpers.ffprobe import stream_creator
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 # audio uploader
 async def upaudio(client, message, msg, file_loc, fname=None):
     
-    await msg.edit(f"Editing Metadata ...")
+    await msg.edit(f"✏️ Editing Metadata ...")
     
     title = None
     artist = None
@@ -47,6 +47,8 @@ async def upaudio(client, message, msg, file_loc, fname=None):
     size = os.path.getsize(file_loc)
     size = get_size(size)
     
+    await msg.edit(f"⬆️ Initiating Upload ...")
+    
     c_time = time.time()    
     try:
         await client.send_audio(
@@ -61,15 +63,16 @@ async def upaudio(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                f"⬆️ Uploading as Audio:\n\n`{fn}`\n",
+                f"⬆️ Uploading as Audio:\n\n`{fn}`",
                 msg,
                 c_time
             )
         )
     except Exception as e:
         print(e)
-        logger.info(f"Some Error Occurred.\n\n{e}")
-        await msg.edit_text("**Some Error Occurred. See Logs for More Info.**")   
+        logger.info(f"Some Error Occurred.{e}")
+        await msg.edit_text("**Some Error Occurred. See Logs for More Info.**")
+        time.sleep(3)
         return True
 
     await msg.delete()
@@ -80,12 +83,18 @@ async def upaudio(client, message, msg, file_loc, fname=None):
 # video uploader
 async def upvideo(client, message, msg, file_loc, fname=None):
     
-    await msg.edit(f"🏞 Generating thumbnail")
+    await msg.edit(f"🏞 Generating thumbnail ...")
     
     width = 0
     height = 0
     duration = 0
     thumbnail = None
+    
+    thumbnail, duration, width, height = await thumb_creator(file_loc)
+    
+    await msg.edit(f"⬆️ Initiating Upload ...")
+    
+    """
     probe = await stream_creator(file_loc)
     logger.info(probe)
     
@@ -96,7 +105,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
         height = int(video_stream['height'] if 'height' in video_stream else 0)
 
     duration = int(float(probe["format"]["duration"]))
-
+    """
     size = os.path.getsize(file_loc)
     size = get_size(size)
     #fn = os.path.basename(file_loc)
@@ -105,7 +114,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
     else:
         fn = os.path.basename(file_loc)
 
-    thumbnail = await thumb_creator(file_loc)
+    
 
     c_time = time.time()    
     try:
@@ -121,15 +130,16 @@ async def upvideo(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                f"⬆️ Uploading as Video:\n\n`{fn}`\n",
+                f"⬆️ Uploading as Video:\n\n`{fn}`",
                 msg,
                 c_time
             )
         )
     except Exception as e:
         print(e)     
-        logger.info(f"Some Error Occurred.\n\n{e}")
+        logger.info(f"Some Error Occurred.{e}")
         await msg.edit_text(f"Some Error Occurred.\n\n{e}")
+        time.sleep(3)
         return True
 
     #await msg.delete()
@@ -139,7 +149,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
 # document uploader
 async def upfile(client, message, msg, file_loc, fname=None):
     
-    await msg.edit(f"⬆️ Trying to Upload as Document ...")
+    await msg.edit(f"⬆️ Initiating Upload ...")
     size = os.path.getsize(file_loc)
     size = get_size(size)
     if fname:
@@ -157,7 +167,7 @@ async def upfile(client, message, msg, file_loc, fname=None):
             reply_to_message_id=message.message_id,
             progress=progress_for_pyrogram,
             progress_args=(
-                f"⬆️ Uploading as Document:\n\n`{fn}`\n",
+                f"⬆️ Uploading as Document:\n\n`{fn}`",
                 msg,
                 c_time
             )
@@ -165,7 +175,8 @@ async def upfile(client, message, msg, file_loc, fname=None):
     except Exception as e:
         await msg.edit(f"❌ Uploading as Document Failed !\n\n**Error:** {e}")
         print(e)     
-        logger.info(f"Some Error Occurred.\n\n{e}")
+        logger.info(f"Some Error Occurred.{e}")
+        time.sleep(3)
         return True
         
     #await msg.delete()

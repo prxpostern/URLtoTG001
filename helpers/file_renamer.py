@@ -94,7 +94,6 @@ async def rnf2(bot , u):
           logger.info(f"status: {status}")
           await msg.edit(f"❌ Downloading Document Failed !")
           await clean_up(file_path)
-          logger.info(f"Deleted: {file_path}")
           return
         try:
           await msg.edit(f"⬆️ Trying to Upload as Document ...")
@@ -117,13 +116,11 @@ async def rnf2(bot , u):
           logger.info(f"status: {status}")
           await msg.delete()
           await clean_up(file_path)
-          logger.info(f"Deleted: {file_path}")
         except Exception as e:
           await msg.edit(f"❌ Uploading as Document Failed **Error:**\n\n{e}")
           status = False
           logger.info(f"status: {status}")
           await clean_up(file_path)
-          logger.info(f"Deleted: {file_path}")
     else:
       await m.reply_text(text=f"are you kidding me ?\n\nExample:\n`/rnf | filename.ext`\n\nsee /hlep.", quote=True)
       return

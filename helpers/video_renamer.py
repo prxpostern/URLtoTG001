@@ -113,18 +113,23 @@ async def rnv2(bot , u):
         status = False
         logger.info(f"status: {status}")
         await clean_up(file_path)
-        logger.info(f"Deleted: {file_path}")
     else:
         await msg.edit(f"🌄 Generating thumbnail ...")
+        """
         probe = await stream_creator(file_path)
         video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
         width = int(video_stream['width'] if 'width' in video_stream else 0)
         height = int(video_stream['height'] if 'height' in video_stream else 0)
         thumbnail = await thumb_creator(file_path)
         duration = int(float(probe["format"]["duration"]))
+        """
+        
+        thumbnail, duration, width, height = await thumb_creator(file_path)
+        
+        await msg.edit(f"⬆️ Trying to Upload as Video ...")
+        c_time = time.time()
         try:
-            await msg.edit(f"⬆️ Trying to Upload as Video ...")
-            c_time = time.time()
+            
             await bot.send_video(
                 chat_id=m.chat.id,
                 file_name=newname,
@@ -146,10 +151,8 @@ async def rnv2(bot , u):
             status = False
             logger.info(f"status: {status}")
             await clean_up(file_path)
-            logger.info(f"Deleted: {file_path}")
         except Exception as e:
             await msg.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
             status = False
             logger.info(f"status: {status}")
             await clean_up(file_path)
-            logger.info(f"Deleted: {file_path}")

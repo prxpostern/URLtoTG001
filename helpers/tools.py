@@ -19,9 +19,14 @@ async def execute(cmnd: str) -> Tuple[str, str, int, int]:
 async def clean_up(input1, input2=None):
     try:
         os.remove(input1)
+        logger.info(f"Deleted: {input1}")
     except:
+        logger.info(f"Delete Failed: {input1}")
         pass
     try:
         os.remove(input2)
+        logger.info(f"Deleted: {input2}")
     except:
+        if input2:
+            logger.info(f"Delete Failed: {input2}")
         pass

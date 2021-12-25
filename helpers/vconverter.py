@@ -94,6 +94,7 @@ async def to_video2(bot , u):
     
     await msg.edit(f"🌄 Generating thumbnail ...")
 
+    """
     probe2 = await execute(f"ffprobe -v quiet -hide_banner -show_format -show_streams -print_format json '{file_path}'")
     if not probe2:
         status = False
@@ -112,8 +113,9 @@ async def to_video2(bot , u):
     video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
     width = int(video_stream['width'] if 'width' in video_stream else 0)
     height = int(video_stream['height'] if 'height' in video_stream else 0)
-
-    thumbnail = await thumb_creator(file_path)
+    """
+    
+    thumbnail, duration, width, height = await thumb_creator(file_path)
 
     fnext = fn + ".mp4"
     await msg.edit(f"⬆️ Trying to Upload as Video ...")
@@ -142,10 +144,9 @@ async def to_video2(bot , u):
         logger.info(f"status: {status}")
         await msg.delete()
         await clean_up(file_path)
-        logger.info(f"Deleted: {file_path}")
     except Exception as e:
         status = False
         logger.info(f"status: {status}")
         await msg.edit(f"❌ Uploading as Video Failed **Error:**\n\n{e}")
         await clean_up(file_path)
-        logger.info(f"Deleted: {file_path}")
+
