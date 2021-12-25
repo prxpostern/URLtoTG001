@@ -28,7 +28,7 @@
             "url": "heroku/python"
         },
         {
-            "url": "https://github.com/prxpostern/heroku-buildpack-ffmpeg-latest"
+            "url": "https://github.com/prxpostern/heroku-buildpack-ffmpeg-latest.git"
         }
     ],
     "formation": {
