@@ -49,6 +49,8 @@ async def upaudio(client, message, msg, file_loc, fname=None):
     
     await msg.edit(f"⬆️ Initiating Upload ...")
     
+    caption = f"**File:** `{fn}`\n**Title:** `{title}`\n**Artist(s):** `{artist}`\n**Size:** {size}"
+    
     c_time = time.time()    
     try:
         await client.send_audio(
@@ -56,7 +58,7 @@ async def upaudio(client, message, msg, file_loc, fname=None):
             audio=file_loc,
             file_name=fn,
             thumb=thumb,
-            caption=f"`{fn}` [{size}]",
+            caption=caption,
             title=title,
             performer=artist,
             duration=duration,
