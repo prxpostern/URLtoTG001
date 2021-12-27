@@ -204,7 +204,7 @@ async def rna2(bot , u):
         title=newtitle,
         duration=duration,
         audio=file_path,
-        caption=f"**Filename:** `{newname}`\n**Title:** `{newtitle}`\n**Artist(s):** `{newartist}`\n**Size:** {fsize}",
+        caption=f"**File:** `{newname}`\n**Title:** `{newtitle}`\n**Artist(s):** `{newartist}`\n**Size:** {fsize}",
         reply_to_message_id=m.message_id,
         progress=progress_for_pyrogram,
         progress_args=(
