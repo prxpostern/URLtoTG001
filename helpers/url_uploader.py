@@ -157,9 +157,9 @@ async def leecher2(bot , u):
             else:
                 return
         else:
-            ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+            ufstatus = await upfile(bot, m, msg, file_path, cfname)
             if ufstatus:
-                ufstatus = await upfile(bot, m, msg, os.path.join(splitted_dir, le_file), cfname)
+                ufstatus = await upfile(bot, m, msg, file_path, cfname)
             else:
                 await msg.delete()
                 return    
