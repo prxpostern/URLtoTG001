@@ -12,7 +12,9 @@ logger = logging.getLogger(__name__)
 
 # audio uploader
 async def upaudio(client, message, msg, file_loc, fname=None):
-    
+    #logger.info(message)
+    #return
+    #
     await msg.edit(f"✏️ Editing Metadata ...")
     
     title = None
@@ -62,7 +64,7 @@ async def upaudio(client, message, msg, file_loc, fname=None):
             title=title,
             performer=artist,
             duration=duration,
-            reply_to_message_id=message.message_id,
+            reply_to_message_id=message.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 f"⬆️ Uploading as Audio:\n\n`{fn}`",
@@ -129,7 +131,7 @@ async def upvideo(client, message, msg, file_loc, fname=None):
             width=width,
             height=height,
             duration=duration,
-            reply_to_message_id=message.message_id,
+            reply_to_message_id=message.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 f"⬆️ Uploading as Video:\n\n`{fn}`",
@@ -166,7 +168,7 @@ async def upfile(client, message, msg, file_loc, fname=None):
             document=file_loc,
             force_document=True,
             caption=f"`{fn}` [{size}]",
-            reply_to_message_id=message.message_id,
+            reply_to_message_id=message.id,
             progress=progress_for_pyrogram,
             progress_args=(
                 f"⬆️ Uploading as Document:\n\n`{fn}`",
