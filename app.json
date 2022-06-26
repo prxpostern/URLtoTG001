@@ -1,7 +1,7 @@
 {
     "name": "Simple Video Uploader",
     "description": "Simple Video Uploader",
-    "repository": "https://github.com/prxpostern/prxvideoleecher001",
+    "repository": "https://github.com/prxpostern/prxvideoleecher002",
     "success_url": "https://t.me/ali110ali",
     "stack": "heroku-20",
     "env": {

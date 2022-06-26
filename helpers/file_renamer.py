@@ -104,7 +104,7 @@ async def rnf2(bot , u):
             document=file_path,
             force_document=True,
             caption=f"`{newname}` [{fsize}]",
-            reply_to_message_id=m.message_id,
+            reply_to_message_id=m.id,
             progress=progress_for_pyrogram,
             progress_args=(
               "⬆️ Uploading as Document:",

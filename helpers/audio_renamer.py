@@ -205,7 +205,7 @@ async def rna2(bot , u):
         duration=duration,
         audio=file_path,
         caption=f"**File:** `{newname}`\n**Title:** `{newtitle}`\n**Artist(s):** `{newartist}`\n**Size:** {fsize}",
-        reply_to_message_id=m.message_id,
+        reply_to_message_id=m.id,
         progress=progress_for_pyrogram,
         progress_args=(
           f"⬆️ Uploading as Audio:",

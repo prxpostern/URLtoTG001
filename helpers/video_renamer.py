@@ -139,7 +139,7 @@ async def rnv2(bot , u):
                 duration=duration,
                 thumb=str(thumbnail),
                 caption=f"`{newname}` [{fsize}]",
-                reply_to_message_id=m.message_id,
+                reply_to_message_id=m.id,
                 progress=progress_for_pyrogram,
                 progress_args=(
                     "⬆️ Uploading as Video:",
