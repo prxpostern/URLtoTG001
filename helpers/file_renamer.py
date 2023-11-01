@@ -37,6 +37,8 @@ async def rnf2(bot , u):
     ft = m.audio
   elif m.document:
     ft = m.document
+  elif m.animation:
+    ft = m.animation    
   else:
     await m.reply_text(text=f"Please Reply to (audio-video-document) files !\n\nSee /help", quote=True)
     return
